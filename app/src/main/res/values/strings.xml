@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">lab_2</string>
     <string name="action_settings">Settings</string>
+    <string name="app_name_firebase">MeetingApp</string>
+    <string name="prpject_url">https://console.firebase.google.com/project/meetingapp-2f339</string>
+    <string name="poject_id">meetingapp-2f339</string>
+    <string name="api_key">AIzaSyA-dPijzTjmnofAloe4feCa4ZmPwz2UFdM</string>
+    <string name="create_meating">Создать встречу</string>
+    <string name="get_all_meat">Получить все встречи</string>
 </resources>
