@@ -5,6 +5,13 @@
     <string name="prpject_url">https://console.firebase.google.com/project/meetingapp-2f339</string>
     <string name="poject_id">meetingapp-2f339</string>
     <string name="api_key">AIzaSyA-dPijzTjmnofAloe4feCa4ZmPwz2UFdM</string>
+    <!--main activity-->
     <string name="create_meating">Создать встречу</string>
     <string name="get_all_meat">Получить все встречи</string>
+    <!--list_item.xml-->
+    <string name="meet_name">Название: </string>
+    <string name="meet_desc">Описание</string>
+    <string name="from_date">Дата начала</string>
+    <string name="to_date">Дата окончания</string>
+    <string name="persons">Участнии:</string>
 </resources>

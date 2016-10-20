@@ -14,6 +14,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     private Intent NotificationIntent;
+    private Intent LaunchIntent;
     private Context context;
 
     @Override
@@ -46,4 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void onCreateMeat(View view){
+
+    }
+
+    public void getAllMeat(View view){
+
+    }
+
+
 }
