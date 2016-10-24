@@ -50,8 +50,6 @@ public class MainAdapter extends ArrayAdapter<Meeting> {
                 toDate.setText(Data.get(i).getToDate());
 
                 ListView parList = (ListView) row.findViewById(R.id.persons_list);
-
-
             }
 
         }
