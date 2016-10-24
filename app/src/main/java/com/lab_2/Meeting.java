@@ -8,12 +8,21 @@ import java.util.List;
  */
 
 public class Meeting {
-    public String Name;
-    public String Description;
-    public Date FromDate;
-    public Date ToDate;
-    public List<Participant> Participants;
-    public String Type;
+    private String Name;
+    private String Description;
+    private String FromDate;
+    private String ToDate;
+    private List<Participant> Participants;
+    private String Type;
+
+    public Meeting(String name, String description, String fromDate, String toDate, List<Participant> participants, String type) {
+        Name = name;
+        Description = description;
+        FromDate = fromDate;
+        ToDate = toDate;
+        Participants = participants;
+        Type = type;
+    }
 
     public String getName() {
         return Name;
@@ -31,19 +40,19 @@ public class Meeting {
         Description = description;
     }
 
-    public Date getFromDate() {
+    public String getFromDate() {
         return FromDate;
     }
 
-    public void setFromDate(Date fromDate) {
+    public void setFromDate(String fromDate) {
         FromDate = fromDate;
     }
 
-    public Date getToDate() {
+    public String getToDate() {
         return ToDate;
     }
 
-    public void setToDate(Date toDate) {
+    public void setToDate(String toDate) {
         ToDate = toDate;
     }
 

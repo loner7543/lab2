@@ -12,6 +12,11 @@ public class Participant {
         return Fio;
     }
 
+    public Participant(String fio, String position) {
+        Fio = fio;
+        Position = position;
+    }
+
     public void setFio(String fio) {
         Fio = fio;
     }

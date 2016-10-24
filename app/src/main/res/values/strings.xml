@@ -7,11 +7,13 @@
     <string name="api_key">AIzaSyA-dPijzTjmnofAloe4feCa4ZmPwz2UFdM</string>
     <!--main activity-->
     <string name="create_meating">Создать встречу</string>
-    <string name="get_all_meat">Получить все встречи</string>
+    <string name="get_all_meat">Получить все встречи</string>]
+    <string name="cancel_meat">Отмнить встречу</string>
     <!--list_item.xml-->
     <string name="meet_name">Название: </string>
-    <string name="meet_desc">Описание</string>
-    <string name="from_date">Дата начала</string>
-    <string name="to_date">Дата окончания</string>
+    <string name="meet_desc">Описание: </string>
+    <string name="from_date">Дата начала: </string>
+    <string name="to_date">Дата окончания: </string>
     <string name="persons">Участнии:</string>
+    <string name="join_me">Буду учавствовать</string>
 </resources>

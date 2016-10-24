@@ -20,17 +20,71 @@
         android:layout_toRightOf="@+id/meet_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+
     <TextView
         android:id="@+id/meet_desc"
         android:text="@string/meet_desc"
         android:layout_below="@+id/meet_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/meet_desc_val"
+        android:layout_below="@+id/meet_name"
+        android:layout_toRightOf="@+id/meet_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
     <TextView
         android:id="@+id/from_date"
         android:text="@string/from_date"
         android:layout_below="@id/meet_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/fromDate_desc"
+        android:layout_below="@+id/meet_desc"
+        android:layout_toRightOf="@+id/from_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/to_date"
+        android:text="@string/to_date"
+        android:layout_below="@+id/from_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/to_date_desc"
+        android:layout_below="@+id/from_date"
+        android:layout_toRightOf="@+id/to_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ScrollView
+        android:id="@+id/scr_list"
+        android:layout_below="@+id/to_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ListView
+            android:id="@+id/persons_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></ListView>
+    </ScrollView>
+    <TextView
+        android:layout_below="@+id/scr_list"
+        android:id="@+id/join"
+        android:text="@string/join_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <CheckBox
+        android:id="@+id/check_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/join"
+        android:layout_alignBottom="@+id/join"
+        android:layout_toEndOf="@+id/join" />
 
 </RelativeLayout>
