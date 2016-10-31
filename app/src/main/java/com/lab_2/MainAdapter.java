@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by Александр on 24.10.2016.
  */
 
-public class MainAdapter extends ArrayAdapter<Meeting> {
+public class MainAdapter extends ArrayAdapter<Meeting> /*implements AdapterView.OnClickListener*/ {
     private Context ctx;
     private  int LayResId;
     private List<Meeting> Data;
@@ -37,6 +38,7 @@ public class MainAdapter extends ArrayAdapter<Meeting> {
             for (int i = 0;i<Data.size();i++){
 
                 row = inflater.inflate(LayResId,parent,false);
+               // row.setOnClickListener(this);
                 TextView meetName = (TextView) row.findViewById(R.id.meet_name_val);
                 meetName.setText(Data.get(i).getName());
 
@@ -55,4 +57,9 @@ public class MainAdapter extends ArrayAdapter<Meeting> {
         }
         return row;
     }
+
+    /*@Override
+    public void onClick(View view) {
+        View v = view;
+    }*/
 }
