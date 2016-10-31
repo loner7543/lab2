@@ -15,6 +15,10 @@ public class Meeting {
     private List<Participant> Participants;
     private String Type;
 
+    public Meeting(){
+
+    }
+
     public Meeting(String name, String description, String fromDate, String toDate, List<Participant> participants, String type) {
         Name = name;
         Description = description;

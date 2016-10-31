@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +24,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class MainActivity extends ActionBarActivity {
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+public class MainActivity extends ActionBarActivity implements ValueEventListener{
+    private static final String TAG = "MainActivityLog";
+    private DatabaseReference mDatabase;
     private Intent NotificationIntent;
     private long[] vibrate = new long[]{1000, 1000, 1000, 1000, 1000};
     private ListView MeetingsList;
@@ -38,6 +48,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mDatabase = FirebaseDatabase.getInstance().getReference();//все ок - подключает
+        Query dataSnapshot = mDatabase.orderByKey();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context = getApplicationContext();
@@ -51,6 +63,7 @@ public class MainActivity extends ActionBarActivity {
         adapter = new MainAdapter(this, R.layout.list_item, Data);
         MeetingsList.setAdapter(adapter);
         random = new Random();
+        mDatabase.addValueEventListener(this);
     }
 
     @Override
@@ -128,10 +141,21 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void getAllMeat(View view) {
-
+        mDatabase.child("users").child("meetingapp").setValue("1");//создет новый узел и пишет данные
     }
 
     public void exportToCSV(View view) {
+
+    }
+
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {// вызывается при привязке данных и каждый раз когда данные меняются
+        Data post = dataSnapshot.getValue(Data.class);
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+        Log.d(TAG,"loadPost:onCancelled", databaseError.toException());
 
     }
 }

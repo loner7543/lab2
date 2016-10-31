@@ -6,6 +6,7 @@
     <string name="projectUrl">https://meetingapp-2f339.firebaseio.com/</string>
     <string name="poject_id">meetingapp-2f339</string>
     <string name="api_key">AIzaSyA-dPijzTjmnofAloe4feCa4ZmPwz2UFdM</string>
+    <string name="User_Auth">29vzPeL88taTjaKxu2ZNRBFAJT22</string>//уникальный идентификатор пользователя
     <!--main activity-->
     <string name="create_meating">Создать встречу</string>
     <string name="get_all_meat">Получить все встречи</string>

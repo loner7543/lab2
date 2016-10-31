@@ -8,6 +8,10 @@ public class Participant {
     private String Fio;
     private String Position;
 
+    public Participant(){
+
+    }
+
     public String getFio() {
         return Fio;
     }
