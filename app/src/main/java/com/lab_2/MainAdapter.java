@@ -1,6 +1,7 @@
 package com.lab_2;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,7 @@ import java.util.List;
  * Created by Александр on 24.10.2016.
  */
 
-public class MainAdapter extends ArrayAdapter<Meeting> /*implements AdapterView.OnClickListener*/ {
+public class MainAdapter extends ArrayAdapter<Meeting> implements AdapterView.OnClickListener {
     private Context ctx;
     private  int LayResId;
     private List<Meeting> Data;
@@ -58,8 +59,10 @@ public class MainAdapter extends ArrayAdapter<Meeting> /*implements AdapterView.
         return row;
     }
 
-    /*@Override
+    @Override
     public void onClick(View view) {
+
         View v = view;
-    }*/
+        v.setBackgroundColor(Color.GRAY);
+    }
 }

@@ -1,0 +1,35 @@
+//Meetings в качестве корня
+{
+  "Meetings" : {
+    "MeetOne" : {
+      "Description" : "One meet desc",
+      "FromDate" : "6.7.2015",
+      "Name" : "FirstMeeName",
+      "Participants" : {
+        "Participant1" : {
+          "Fio" : "Ivanov",
+          "Position" : "Manager"
+        },
+        "Participant2" : {
+          "Fio" : "Petrov",
+          "Position" : "Developer"
+        }
+      },
+      "ToDate" : "6.8.2015",
+      "Type" : "low"
+    },
+    "MeetTwo" : {
+      "Description" : "TwoMeetDesc",
+      "FromDate" : "23.11.11",
+      "Name" : "TwoMeetName",
+      "Participants" : {
+        "Participant1" : {
+          "Fio" : "Sidorov",
+          "Position" : "CleanDept"
+        }
+      },
+      "ToDate" : "24.11.2015",
+      "Type" : "Normal"
+    }
+  }
+}

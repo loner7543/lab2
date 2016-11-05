@@ -12,8 +12,8 @@ public class Meeting {
     private String Description;
     private String FromDate;
     private String ToDate;
-    private List<Participant> Participants;
     private String Type;
+    private List<Participant> Participants;
 
     public Meeting(){
 
@@ -24,8 +24,8 @@ public class Meeting {
         Description = description;
         FromDate = fromDate;
         ToDate = toDate;
-        Participants = participants;
         Type = type;
+        Participants = participants;
     }
 
     public String getName() {

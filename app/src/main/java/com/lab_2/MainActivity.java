@@ -29,11 +29,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends ActionBarActivity implements ValueEventListener, ChildEventListener, AdapterView.OnItemLongClickListener {
+    private static final String NAME = "Name";
+    private static final String DESCrPTION = "Description";
+    private static final String FrOM_DATE = "FromDate";
+    private static final String TO_DATE = "ToDate";
+    private static final String TYPE = "Type";
+    private static final String PArTICIPANTS_CHILD_KEY = "Participants";
     private static final String TAG = "MainActivityLog";
     private DatabaseReference mDatabase;
     private Intent NotificationIntent;
@@ -61,8 +68,10 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         setSupportActionBar(toolbar);
         context = getApplicationContext();
         MeetingsList = (ListView) findViewById(R.id.meeting_list);
+
         MeetingsList.setOnItemLongClickListener(this);
-        Participant participant = new Participant("1", "1");
+
+       Participant participant = new Participant("1", "1");
         List<Participant> participants = new LinkedList<>();
         participants.add(participant);
         Meeting meeting = new Meeting("someName", "someD", "d1", "d2", participants, "gold");
@@ -131,7 +140,39 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {// вызывается при привязке данных и каждый раз когда данные меняются
-        Data post = dataSnapshot.getValue(Data.class);
+        List<Meeting> allMeatings = new LinkedList<>();
+        List<Participant> participants = null;
+        Meeting res = new Meeting();
+        Iterable<DataSnapshot> iterable = dataSnapshot.getChildren();
+        Iterator<DataSnapshot> chIter = iterable.iterator();
+
+        Iterable<DataSnapshot> CHIterable;
+        Iterator<DataSnapshot> CHIT;
+
+        while (chIter.hasNext()){
+            DataSnapshot snapshot = chIter.next();
+            Meeting meeting = new Meeting();
+            meeting.setName((String) snapshot.child(NAME).getValue());
+            meeting.setDescription((String) snapshot.child(DESCrPTION).getValue());
+            meeting.setFromDate((String) snapshot.child(FrOM_DATE).getValue());
+            meeting.setToDate((String) snapshot.child(TO_DATE).getValue());
+            meeting.setType((String) snapshot.child(TYPE).getValue());
+            if (snapshot.hasChild(PArTICIPANTS_CHILD_KEY)){
+                DataSnapshot ps = snapshot.child("Participants");
+                CHIterable = ps.getChildren();
+                CHIT = CHIterable.iterator();
+                participants =  new LinkedList<>();
+                while (CHIT.hasNext()){
+                    DataSnapshot psk = CHIT.next();
+                    Participant participant = psk.getValue(Participant.class);
+                    participants.add(participant);
+                }
+            }
+            meeting.setParticipants(participants);
+            allMeatings.add(meeting);
+        }
+        this.Data = allMeatings;
+        adapter.notifyDataSetChanged();// не меняет
         Log.d(TAG,"Data read sucs");
         onShowNotification();
     }

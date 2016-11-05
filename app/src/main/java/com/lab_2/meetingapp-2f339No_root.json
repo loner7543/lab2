@@ -1,0 +1,33 @@
+{
+  "Meet3" : {
+    "Description" : "efefee",
+    "FromDate" : "efefefe",
+    "Name" : "qwe",
+    "Participants" : {
+      "Participant1" : {
+        "Fio" : "fio",
+        "Position" : "pos"
+      },
+      "Participant2" : {
+        "Fio" : "zxc",
+        "Position" : "cxz"
+      }
+    },
+    "ToDate" : "fefefe",
+    "Type" : "h"
+  },
+  "MeetTwo" : {
+    "Description" : "ef",
+    "FromDate" : "11.12.12",
+    "Name" : "t",
+    "Participants" : {
+      "Participant1" : {
+        "Fio" : "oif",
+        "Position" : "sd"
+      }
+    },
+    "ToDate" : "12.12.13",
+    "Type" : "Low"
+  }
+}
+
