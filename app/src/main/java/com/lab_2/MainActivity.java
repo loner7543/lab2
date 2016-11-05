@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     private static final String TYPE = "Type";
     private static final String PArTICIPANTS_CHILD_KEY = "Participants";
     private static final String TAG = "MainActivityLog";
+
     private DatabaseReference mDatabase;
     private Intent NotificationIntent;
     private PendingIntent pendingIntent;
@@ -56,21 +58,21 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     private MainAdapter adapter;
     private Random random;
     private AlertDialog.Builder ad;
-    private Editable SearchText;
-
+    private String SearchText;
+    private Query query;
+    private  MyTask task;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mDatabase = FirebaseDatabase.getInstance().getReference();//все ок - подключает
-        Query dataSnapshot = mDatabase.orderByKey();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context = getApplicationContext();
         MeetingsList = (ListView) findViewById(R.id.meeting_list);
 
         MeetingsList.setOnItemLongClickListener(this);
-
+        task = new MyTask();
         random = new Random();
         mDatabase.addValueEventListener(this);
     }
@@ -98,7 +100,8 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
             ad.setCancelable(false)
                     .setPositiveButton(R.string.find_btn, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            SearchText = editText.getText();
+                            SearchText = editText.getText().toString();
+                            query = mDatabase.equalTo(SearchText);
                         }
                     })
                     .setNegativeButton(R.string.btn_cancel,
@@ -132,6 +135,7 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {// вызывается при привязке данных и каждый раз когда данные меняются
+        Log.d(TAG,"Data read start");
         List<Meeting> allMeatings = new LinkedList<>();
         List<Participant> participants = null;
         Iterable<DataSnapshot> iterable = dataSnapshot.getChildren();

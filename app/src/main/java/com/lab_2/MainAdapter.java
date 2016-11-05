@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -36,23 +38,25 @@ public class MainAdapter extends ArrayAdapter<Meeting> implements AdapterView.On
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         if (row==null){
-            for (int i = 0;i<Data.size();i++){
+            for (Meeting meeting:Data){
 
                 row = inflater.inflate(LayResId,parent,false);
-               // row.setOnClickListener(this);
+               row.setOnClickListener(this);
                 TextView meetName = (TextView) row.findViewById(R.id.meet_name_val);
-                meetName.setText(Data.get(i).getName());
+                meetName.setText(meeting.getName());
 
                 TextView meetDesc = (TextView) row.findViewById(R.id.meet_desc_val);
-                meetDesc.setText(Data.get(i).getType());
+                meetDesc.setText(meeting.getType());
 
                 TextView fromDate = (TextView) row.findViewById(R.id.fromDate_desc);
-                fromDate.setText(Data.get(i).getFromDate());
+                fromDate.setText(meeting.getFromDate());
 
                 TextView toDate = (TextView) row.findViewById(R.id.to_date_desc);
-                toDate.setText(Data.get(i).getToDate());
+                toDate.setText(meeting.getToDate());
 
                 ListView parList = (ListView) row.findViewById(R.id.persons_list);
+                ParticipantAdapter participantAdapter = new ParticipantAdapter(ctx,R.layout.partcipant_item,meeting.getParticipants());
+                parList.setAdapter(participantAdapter);
             }
 
         }

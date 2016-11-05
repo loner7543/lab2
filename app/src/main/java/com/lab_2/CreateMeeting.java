@@ -1,17 +1,22 @@
 package com.lab_2;
 
-import android.content.res.Resources;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.Serializable;
 
 public class CreateMeeting extends AppCompatActivity {
     private ArrayAdapter<CharSequence> ParAdapter;
+    private DatabaseReference mDatabase;
     private Spinner spinner;
     private EditText Name;
     private EditText Descrption;
@@ -35,6 +40,7 @@ public class CreateMeeting extends AppCompatActivity {
         //spinner.setPrompt(res.getString(R.string.Priority_text));
         ParAdapter = ArrayAdapter.createFromResource(this,R.array.Priority_array, android.R.layout.simple_spinner_item);
         spinner.setAdapter(ParAdapter);
+        mDatabase = FirebaseDatabase.getInstance().getReference();//все ок - подключает
     }
 
     public void onSendData(View view){
