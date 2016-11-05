@@ -71,14 +71,6 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
 
         MeetingsList.setOnItemLongClickListener(this);
 
-       Participant participant = new Participant("1", "1");
-        List<Participant> participants = new LinkedList<>();
-        participants.add(participant);
-        Meeting meeting = new Meeting("someName", "someD", "d1", "d2", participants, "gold");
-        Data = new LinkedList<>();
-        Data.add(meeting);
-        adapter = new MainAdapter(this, R.layout.list_item, Data);
-        MeetingsList.setAdapter(adapter);
         random = new Random();
         mDatabase.addValueEventListener(this);
     }
@@ -142,7 +134,6 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     public void onDataChange(DataSnapshot dataSnapshot) {// вызывается при привязке данных и каждый раз когда данные меняются
         List<Meeting> allMeatings = new LinkedList<>();
         List<Participant> participants = null;
-        Meeting res = new Meeting();
         Iterable<DataSnapshot> iterable = dataSnapshot.getChildren();
         Iterator<DataSnapshot> chIter = iterable.iterator();
 
@@ -172,6 +163,8 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
             allMeatings.add(meeting);
         }
         this.Data = allMeatings;
+        adapter = new MainAdapter(this, R.layout.list_item, Data);
+        MeetingsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();// не меняет
         Log.d(TAG,"Data read sucs");
         onShowNotification();
