@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,18 +28,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends ActionBarActivity implements ValueEventListener, ChildEventListener, AdapterView.OnItemLongClickListener {
-    private static final String NAME = "Name";
-    private static final String DESCrPTION = "Description";
-    private static final String FrOM_DATE = "FromDate";
-    private static final String TO_DATE = "ToDate";
-    private static final String TYPE = "Type";
     private static final String PArTICIPANTS_CHILD_KEY = "Participants";
     private static final String TAG = "MainActivityLog";
 
@@ -126,7 +119,6 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     public void getAllMeat(View view) {
         //mDatabase.child("MyObj").child("name").setValue("1");//создет новый узел и пишет данные
        // mDatabase.child("MyObj").child("desc").setValue("1");//создет новый узел и пишет данные
-        mDatabase.child("NewChildBundle").child("pat").setValue("12");//создет новый узел и пишет данные
     }
 
     public void exportToCSV(View view) {
@@ -147,11 +139,11 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         while (chIter.hasNext()){
             DataSnapshot snapshot = chIter.next();
             Meeting meeting = new Meeting();
-            meeting.setName((String) snapshot.child(NAME).getValue());
-            meeting.setDescription((String) snapshot.child(DESCrPTION).getValue());
-            meeting.setFromDate((String) snapshot.child(FrOM_DATE).getValue());
-            meeting.setToDate((String) snapshot.child(TO_DATE).getValue());
-            meeting.setType((String) snapshot.child(TYPE).getValue());
+            meeting.setName((String) snapshot.child(Fields.NAME).getValue());
+            meeting.setDescription((String) snapshot.child(Fields.DESCRIPTION).getValue());
+            meeting.setFromDate((String) snapshot.child(Fields.FROM_DATE).getValue());
+            meeting.setToDate((String) snapshot.child(Fields.TO_DATE).getValue());
+            meeting.setType((String) snapshot.child(Fields.TYPE).getValue());
             if (snapshot.hasChild(PArTICIPANTS_CHILD_KEY)){
                 DataSnapshot ps = snapshot.child("Participants");
                 CHIterable = ps.getChildren();

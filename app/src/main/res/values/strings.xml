@@ -33,6 +33,7 @@
         <item>low</item>
         <item>Hight</item>
     </string-array>
+    <string name="add_participant">Добавить участника</string>
     <string name="find_meeting">Задайте описание для поиска</string>
     <string name="find_btn">Искать</string>
     <string name="btn_cancel">Отменить</string>

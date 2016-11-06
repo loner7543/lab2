@@ -57,13 +57,6 @@
         android:layout_toEndOf="@+id/SelectToDate"
         android:layout_above="@+id/SelectToDate" />
 
-    <Spinner
-     android:id="@+id/Priority"
-     android:layout_below="@+id/ToDateEdit"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content">
-    </Spinner>
-
     <TextView
         android:id="@+id/SelectToDate"
         android:text="@string/to_date"
@@ -80,8 +73,20 @@
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/SelectToDate" />
 
+    <Spinner
+     android:id="@+id/Priority"
+     android:layout_below="@+id/ToDateEdit"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content">
+    </Spinner>
     <Button
+        android:id="@+id/AddParButton"
         android:layout_below="@+id/Priority"
+        android:text="@string/add_participant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_below="@+id/AddParButton"
         android:onClick="onSendData"
         android:text="@string/create_meating"
         android:layout_width="wrap_content"

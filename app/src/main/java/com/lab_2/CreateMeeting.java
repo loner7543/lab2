@@ -1,6 +1,5 @@
 package com.lab_2;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,8 +10,6 @@ import android.widget.Spinner;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.io.Serializable;
 
 public class CreateMeeting extends AppCompatActivity {
     private ArrayAdapter<CharSequence> ParAdapter;
@@ -27,6 +24,8 @@ public class CreateMeeting extends AppCompatActivity {
     private String DescText;
     private String FromDateText;
     private String ToDateText;
+    private String Type;
+    private int i = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +47,13 @@ public class CreateMeeting extends AppCompatActivity {
         DescText = Descrption.getText().toString();
         FromDateText = FromDate.getText().toString();
         ToDateText = ToDate.getText().toString();
+        Type = spinner.getSelectedItem().toString();
+        mDatabase.child(Fields.MEET_NAME+i).child(Fields.NAME).setValue(NameText);
+        mDatabase.child(Fields.MEET_NAME+i).child(Fields.DESCRIPTION).setValue(DescText);
+        mDatabase.child(Fields.MEET_NAME+i).child(Fields.FROM_DATE).setValue(FromDateText);
+        mDatabase.child(Fields.MEET_NAME+i).child(Fields.TO_DATE).setValue(ToDateText);
+        mDatabase.child(Fields.MEET_NAME+i).child(Fields.TYPE).setValue(Type);
+        //i++;
         ScrollView scrollView = new ScrollView(this);
     }
 }
