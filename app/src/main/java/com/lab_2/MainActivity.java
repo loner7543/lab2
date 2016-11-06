@@ -33,7 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class MainActivity extends ActionBarActivity implements ValueEventListener, ChildEventListener, AdapterView.OnItemLongClickListener {
+public class MainActivity extends ActionBarActivity implements ValueEventListener, ChildEventListener, AdapterView.OnItemClickListener {
     private static final String PArTICIPANTS_CHILD_KEY = "Participants";
     private static final String TAG = "MainActivityLog";
 
@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         context = getApplicationContext();
         MeetingsList = (ListView) findViewById(R.id.meeting_list);
 
-        MeetingsList.setOnItemLongClickListener(this);
+        MeetingsList.setOnItemClickListener(this);
         task = new MyTask();
         random = new Random();
         mDatabase.addValueEventListener(this);
@@ -161,7 +161,7 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         this.Data = allMeatings;
         adapter = new MainAdapter(this, R.layout.list_item, Data);
         MeetingsList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();// не меняет
+        adapter.notifyDataSetChanged();
         Log.d(TAG,"Data read sucs");
         onShowNotification();
     }
@@ -225,8 +225,8 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
 
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         int f = 2;
-        return false;
+        String d = "e";
     }
 }

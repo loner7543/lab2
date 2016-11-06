@@ -62,16 +62,20 @@
         android:layout_toRightOf="@+id/to_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <ScrollView
-        android:id="@+id/scr_list"
-        android:layout_below="@+id/to_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ListView
-            android:id="@+id/persons_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></ListView>
-    </ScrollView>
+<TextView
+    android:id="@+id/Priority_Item"
+    android:text="@string/Priority_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/to_date" />
+<TextView
+    android:layout_below="@+id/to_date"
+    android:layout_toRightOf="@+id/Priority_Item"
+    android:id="@+id/Priority_Item_Desc"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
+
     <TextView
         android:layout_below="@+id/scr_list"
         android:id="@+id/join"
@@ -79,7 +83,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <ScrollView
+        android:id="@+id/scr_list"
+        android:layout_below="@+id/Priority_Item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ListView
+            android:id="@+id/persons_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></ListView>
+    </ScrollView>
+
     <CheckBox
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:id="@+id/check_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

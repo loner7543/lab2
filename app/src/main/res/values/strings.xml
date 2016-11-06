@@ -19,9 +19,9 @@
     <string name="meet_desc">Описание: </string>
     <string name="from_date">Дата начала: </string>
     <string name="to_date">Дата окончания: </string>
-    <string name="persons">Участнии:</string>
-    <string name="join_me">Буду учавствовать</string>
-    <string name="Priority_text">Приоритет</string>
+    <string name="persons">Участнии: </string>
+    <string name="join_me">Буду учавствовать </string>
+    <string name="Priority_text">Приоритет </string>
     <!--список участников-->
     <string name="par_name">Имя: </string>
     <string name="par_desc">Должность</string>
