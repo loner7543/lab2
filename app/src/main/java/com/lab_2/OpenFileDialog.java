@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 public class OpenFileDialog extends AlertDialog.Builder {
-    public static String FILE_SEPAATOR ="/";
+    public static final String FILE_SEPARATOR ="/";
     private String currentPath = Environment.getExternalStorageDirectory().getPath();
     private List<File> files = new ArrayList<File>();
     private FileAdapter FileAdapter;
@@ -31,7 +31,7 @@ public class OpenFileDialog extends AlertDialog.Builder {
         setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String s = FileAdapter.getDeltaPath()+FILE_SEPAATOR;//тут та папка которую вызерет пользователь
+                String s = FileAdapter.getDeltaPath()+FILE_SEPARATOR;//тут та папка которую вызерет пользователь
                 currentPath = currentPath+s;
             }
         })

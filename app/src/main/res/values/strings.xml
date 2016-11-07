@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">lab_2</string>
+    <string name="app_name">Meeting app</string>
     <string name="action_settings">Поиск встречи</string>
     <string name="app_name_firebase">MeetingApp</string>
     <string name="prpject_url_console">https://console.firebase.google.com/project/meetingapp-2f339</string>

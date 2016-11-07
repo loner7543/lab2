@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 public class FileAdapter extends ArrayAdapter<File> implements View.OnClickListener {
-    public String deltaPath;
+    private String deltaPath;
     public FileAdapter(Context context, List<File> objects) {
         super(context, android.R.layout.simple_list_item_1, objects);
     }

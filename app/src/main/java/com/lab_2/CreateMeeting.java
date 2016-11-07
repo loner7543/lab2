@@ -17,6 +17,9 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CreateMeeting extends AppCompatActivity {
     private RelativeLayout MainLayout;
     private ArrayAdapter<CharSequence> ParAdapter;
@@ -66,8 +69,16 @@ public class CreateMeeting extends AppCompatActivity {
         mDatabase.child(Fields.MEET_NAME+i).child(Fields.FROM_DATE).setValue(FromDateText);
         mDatabase.child(Fields.MEET_NAME+i).child(Fields.TO_DATE).setValue(ToDateText);
         mDatabase.child(Fields.MEET_NAME+i).child(Fields.TYPE).setValue(Type);
+        String key = mDatabase.child("posts").push().getKey();
+
+        int j = 1;
+        //Participant post = new Participant("newFio","NewDesc");
+        //Map<String, String> postValues = post.toMap();
+        //mDatabase.child("Meet4").child(Fields.PARTICIPANTS).child(Fields.PARTICIPANT+j).push().setValue(postValues);//
+       // childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
+
+        //mDatabase.updateChildren(childUpdates);
         //i++;
-        ScrollView scrollView = new ScrollView(this);
     }
 
     public void onAddNewParticipant(View view){

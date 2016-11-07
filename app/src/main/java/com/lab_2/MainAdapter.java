@@ -18,9 +18,10 @@ import java.util.List;
  * Created by Александр on 24.10.2016.
  */
 
-public class MainAdapter extends BaseAdapter implements AdapterView.OnClickListener {
+public class MainAdapter extends BaseAdapter {
     private static final String TAG = "MainAdapter";
     private Context ctx;
+    private int pos;
     private  int LayResId;
     private List<Meeting> Data;
     private LayoutInflater inflater;
@@ -53,7 +54,7 @@ public class MainAdapter extends BaseAdapter implements AdapterView.OnClickListe
         View row = convertView;
         if (row==null){
                 row = inflater.inflate(LayResId,parent,false);
-                row.setOnClickListener(this);
+               // row.setOnClickListener(this);
                 Meeting currMeet = getMeeting(position);
                 Log.d(TAG,"Curr item name:"+currMeet.getName());
                 TextView meetName = (TextView) row.findViewById(R.id.meet_name_val);
@@ -79,12 +80,12 @@ public class MainAdapter extends BaseAdapter implements AdapterView.OnClickListe
         return row;
     }
 
-    @Override
+  /*  @Override
     public void onClick(View view) {
 
         View v = view;
         v.setBackgroundColor(Color.GRAY);
-    }
+    }*/
 
     public Meeting getMeeting(int Position){
         return (Meeting) getItem(Position);

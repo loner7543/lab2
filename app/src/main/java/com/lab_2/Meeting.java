@@ -8,6 +8,7 @@ import java.util.List;
  */
 
 public class Meeting {
+    private String Key;
     private String Name;
     private String Description;
     private String FromDate;
@@ -74,5 +75,13 @@ public class Meeting {
 
     public void setType(String type) {
         Type = type;
+    }
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
     }
 }

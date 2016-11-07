@@ -28,10 +28,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
 
 public class MainActivity extends ActionBarActivity implements ValueEventListener, ChildEventListener, AdapterView.OnItemClickListener {
     private static final String PArTICIPANTS_CHILD_KEY = "Participants";
@@ -54,6 +56,9 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     private String SearchText;
     private Query query;
     private  MyTask task;
+
+    private MyTimerTask myTimerTask;
+    private Timer timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,9 +68,12 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         setSupportActionBar(toolbar);
         context = getApplicationContext();
         MeetingsList = (ListView) findViewById(R.id.meeting_list);
-
         MeetingsList.setOnItemClickListener(this);
-        task = new MyTask();
+        task = new MyTask();//способ1
+
+        myTimerTask = new MyTimerTask();
+        timer = new Timer();
+        //timer.schedule(myTimerTask,1000,5000);
         random = new Random();
         mDatabase.addValueEventListener(this);
     }
@@ -117,12 +125,30 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     }
 
     public void getAllMeat(View view) {
-        //mDatabase.child("MyObj").child("name").setValue("1");//создет новый узел и пишет данные
-       // mDatabase.child("MyObj").child("desc").setValue("1");//создет новый узел и пишет данные
     }
 
-    public void exportToCSV(View view) {
+    public void exportToCSV(View view) throws IOException {
+        OpenFileDialog fileDialog = new OpenFileDialog(this,Data);
+        fileDialog.show();
+        //select * query
+        /*Query query = null;
+        query = mDatabase.equalTo(true,"Name");
+        String rootDir = "/";//кень файловой системы
+        String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();//storade/emulated/0
+        String filaName = "Lab2Export";
+        File resExport = new File(baseDir,filaName);//создает директорию а не файл !!!!!
+        if(resExport.createNewFile())
+        {
+            CSVWriter csvWriter = new CSVWriter(new FileWriter(resExport));
+            //csvWriter.writeNext();
 
+        }*/
+    }
+
+    public void onDeleteMeet(View view){
+       Meeting meeting = (Meeting) MeetingsList.getSelectedItem();
+       // MeetingsList.getItem
+        //mDatabase.child("Meet4").removeValue();
     }
 
     @Override
@@ -139,6 +165,7 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         while (chIter.hasNext()){
             DataSnapshot snapshot = chIter.next();
             Meeting meeting = new Meeting();
+            meeting.setKey(snapshot.getKey());
             meeting.setName((String) snapshot.child(Fields.NAME).getValue());
             meeting.setDescription((String) snapshot.child(Fields.DESCRIPTION).getValue());
             meeting.setFromDate((String) snapshot.child(Fields.FROM_DATE).getValue());
@@ -172,13 +199,6 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     }
 
     public void onShowNotification(){
-        /*Participant participant = new Participant("122","122");
-        List<Participant> participants = new LinkedList<>();
-        participants.add(participant);
-        Meeting Newmeeting = new Meeting("1","1","1","1",participants,"normal");
-        Data.add(Newmeeting);
-        //  adapter.add(Newmeeting);
-        adapter.notifyDataSetChanged();*/
         NotificationIntent = new Intent(context,MainActivity.class);
         pendingIntent = PendingIntent.getActivity(context,
                 0, NotificationIntent,
@@ -223,10 +243,16 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
 
     }
 
-
     @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        String s = "efefefefe";
+    }
+
+
+    /*@Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         int f = 2;
         String d = "e";
-    }
+    }*/
+
 }
