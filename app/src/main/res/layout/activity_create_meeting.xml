@@ -18,6 +18,7 @@
         android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/Name_Edit"
+        android:hint="@string/meet_name_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/Desc_Edit"
@@ -33,6 +34,7 @@
 
     <EditText
         android:id="@+id/Desc_Edit"
+        android:hint="@string/meet_desc_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/FromDateEdit"
@@ -51,6 +53,7 @@
     <EditText
         android:id="@+id/FromDateEdit"
         android:layout_width="match_parent"
+        android:hint="@string/dete_hint"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/Desc_Meet"
@@ -68,6 +71,7 @@
     <EditText
         android:id="@+id/ToDateEdit"
         android:layout_width="match_parent"
+        android:hint="@string/dete_hint"
         android:layout_height="wrap_content"
         android:layout_below="@+id/Select_FomDate"
         android:layout_alignParentEnd="true"
@@ -80,31 +84,64 @@
      android:layout_height="wrap_content">
     </Spinner>
 
-    <ScrollView
+    <TextView
+        android:id="@+id/persons_label"
         android:layout_below="@+id/Priority"
-        android:id="@+id/newPar_Scroll"
+        android:text="@string/persons"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ListView
-            android:id="@+id/new_Participants"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        android:layout_height="wrap_content" />
 
-        </ListView>
-    </ScrollView>
+    <TextView
+        android:id="@+id/par_name_New"
+        android:text="@string/par_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/par_nameVal_new"
+        android:layout_alignBottom="@+id/par_nameVal_new"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/par_nameVal_new"
+        android:layout_toRightOf="@+id/par_name_New"
+        android:hint="@string/add_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/persons_label"
+        android:layout_marginBottom="@dimen/dev_margin"
+        android:layout_alignEnd="@+id/par_descVal_new" />
+
+    <TextView
+        android:id="@+id/par_desc_new"
+        android:text="@string/par_desc"
+        android:layout_below="@+id/par_nameVal_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/par_descVal_new"
+        android:hint="@string/add_pos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/par_desc_new"
+        android:layout_alignBottom="@+id/par_desc_new"
+        android:layout_toEndOf="@+id/par_desc_new" />
+
 
     <Button
         android:id="@+id/AddParButton"
-        android:layout_below="@+id/newPar_Scroll"
         android:onClick="onAddNewParticipant"
         android:text="@string/add_participant"
+        android:layout_marginTop="@dimen/dev_margin"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/par_descVal_new"
+        android:layout_alignParentStart="true" />
+
     <Button
-        android:layout_below="@+id/AddParButton"
         android:onClick="onSendData"
         android:text="@string/create_meating"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dev_margin"
+        android:layout_below="@+id/AddParButton"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
