@@ -14,17 +14,25 @@
     tools:showIn="@layout/activity_main">
 
     <ScrollView
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
         android:id="@+id/MainScroll"
         android:layout_width="wrap_content"
         android:layout_height="300dp">
         <ListView
+            android:focusable = "false"
+            android:focusableInTouchMode = "false"
+            android:descendantFocusability="blocksDescendants"
             android:id="@+id/meeting_list"
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:headerDividersEnabled="false"></ListView>
     </ScrollView>
 
     <Button
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
         android:id="@+id/get_all_meat"
         android:onClick="getAllMeat"
         android:text="@string/get_all_meat"
@@ -33,6 +41,8 @@
         android:layout_height="wrap_content" />
 
     <Button
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
         android:text="@string/create_meating"
         android:onClick="onCreateMeat"
         android:layout_toRightOf="@+id/get_all_meat"
@@ -40,7 +50,11 @@
         android:id="@+id/crate_meat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+
     <Button
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
         android:id="@+id/cancel_meat"
         android:text="@string/cancel_meat"
         android:onClick="onDeleteMeet"
@@ -48,7 +62,10 @@
         android:layout_toRightOf="@+id/crate_meat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <Button
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
         android:id="@+id/export_btn"
         android:text="@string/ExportBtn"
         android:onClick="exportToCSV"

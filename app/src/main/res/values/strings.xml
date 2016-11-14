@@ -30,10 +30,18 @@
     <!--Создать встречу-->
     <string-array name="Priority_array">
         <item>Normal</item>
-        <item>low</item>
-        <item>Hight</item>
+        <item>Low</item>
+        <item>High</item>
     </string-array>
     <string name="add_participant">Добавить участника</string>
+    <!--hints-->
+    <string name="meet_name_hint">Some meet</string>
+    <string name="meet_desc_hint">Enter meeting description</string>
+    <string name="DateHint">Enter date</string>
+    <string name="select_priority">Выберите приоритет</string>
+    <string name="date_hint">11.11.2012</string>
+    <string name="add_name">Ivanov</string>
+    <string name="add_pos">Developer</string>
     <string name="find_meeting">Задайте описание для поиска</string>
     <string name="find_btn">Искать</string>
     <string name="btn_cancel">Отменить</string>
