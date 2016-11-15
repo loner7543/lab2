@@ -45,4 +45,12 @@
     <string name="find_meeting">Задайте описание для поиска</string>
     <string name="find_btn">Искать</string>
     <string name="btn_cancel">Отменить</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="login">Enter login</string>
+    <string name="password">Enter password</string>
+    <string name="in">SignIn</string>
+    <string name="inc_login">Incorrect login</string>
+    <string name="inc_pass">Incorrect password</string>
 </resources>

@@ -5,17 +5,24 @@
     android:id="@+id/content_main"
     android:layout_marginBottom="@dimen/item_margin"
     android:layout_width="match_parent"
+    android:clickable="true"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.lab_2.MainActivity">
 
     <TextView
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
+        android:descendantFocusability="blocksDescendants"
         android:id="@+id/meet_name"
         android:text="@string/meet_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
+        android:descendantFocusability="blocksDescendants"
         android:id="@+id/meet_name_val"
         android:text=""
         android:layout_toRightOf="@+id/meet_name"
@@ -24,6 +31,9 @@
 
 
     <TextView
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
+        android:descendantFocusability="blocksDescendants"
         android:id="@+id/meet_desc"
         android:text="@string/meet_desc"
         android:layout_below="@+id/meet_name"
@@ -31,6 +41,9 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
+        android:descendantFocusability="blocksDescendants"
         android:id="@+id/meet_desc_val"
         android:layout_below="@+id/meet_name"
         android:layout_toRightOf="@+id/meet_desc"
@@ -39,12 +52,19 @@
 
 
     <TextView
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
+        android:descendantFocusability="blocksDescendants"
         android:id="@+id/from_date"
         android:text="@string/from_date"
         android:layout_below="@id/meet_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <TextView
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
+        android:descendantFocusability="blocksDescendants"
         android:id="@+id/fromDate_desc"
         android:layout_below="@+id/meet_desc"
         android:layout_toRightOf="@+id/from_date"
@@ -52,24 +72,39 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
+        android:descendantFocusability="blocksDescendants"
         android:id="@+id/to_date"
         android:text="@string/to_date"
         android:layout_below="@+id/from_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <TextView
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
+        android:descendantFocusability="blocksDescendants"
         android:id="@+id/to_date_desc"
         android:layout_below="@+id/from_date"
         android:layout_toRightOf="@+id/to_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
 <TextView
+    android:focusable = "false"
+    android:focusableInTouchMode = "false"
+    android:descendantFocusability="blocksDescendants"
     android:id="@+id/Priority_Item"
     android:text="@string/Priority_text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@+id/to_date" />
+
 <TextView
+    android:focusable = "false"
+    android:focusableInTouchMode = "false"
+    android:descendantFocusability="blocksDescendants"
     android:layout_below="@+id/to_date"
     android:layout_toRightOf="@+id/Priority_Item"
     android:id="@+id/Priority_Item_Desc"
@@ -78,6 +113,9 @@
 
 
     <TextView
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
+        android:descendantFocusability="blocksDescendants"
         android:layout_below="@+id/scr_list"
         android:id="@+id/join"
         android:text="@string/join_me"
@@ -85,6 +123,9 @@
         android:layout_height="wrap_content" />
 
     <ScrollView
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
+        android:descendantFocusability="blocksDescendants"
         android:id="@+id/scr_list"
         android:layout_below="@+id/Priority_Item"
         android:layout_width="wrap_content"
@@ -105,6 +146,8 @@
         android:layout_alignBottom="@+id/join"
         android:layout_toEndOf="@+id/join" />-->
     <View
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
         android:layout_marginTop="@dimen/dev_margin"
         android:layout_below="@+id/scr_list"
         android:layout_width="fill_parent"

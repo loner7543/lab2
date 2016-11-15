@@ -53,7 +53,7 @@
     <EditText
         android:id="@+id/FromDateEdit"
         android:layout_width="match_parent"
-        android:hint="@string/dete_hint"
+        android:hint="@string/DateHint"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/Desc_Meet"
@@ -71,22 +71,34 @@
     <EditText
         android:id="@+id/ToDateEdit"
         android:layout_width="match_parent"
-        android:hint="@string/dete_hint"
+        android:hint="@string/DateHint"
         android:layout_height="wrap_content"
         android:layout_below="@+id/Select_FomDate"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/SelectToDate" />
 
-    <Spinner
-     android:id="@+id/Priority"
-     android:layout_below="@+id/ToDateEdit"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content">
-    </Spinner>
+    <RelativeLayout
+        android:layout_marginBottom="@dimen/dev_margin"
+        android:id="@+id/priority_container"
+        android:layout_below="@+id/ToDateEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/prioity_label"
+            android:text="@string/select_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/Priority"
+            android:layout_toRightOf="@+id/prioity_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </Spinner>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/persons_label"
-        android:layout_below="@+id/Priority"
+        android:layout_below="@+id/priority_container"
         android:text="@string/persons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -141,7 +153,6 @@
         android:text="@string/create_meating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dev_margin"
-        android:layout_below="@+id/AddParButton"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
