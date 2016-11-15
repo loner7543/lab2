@@ -1,0 +1,31 @@
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.lab_2.LoginActivity">
+        <EditText
+            android:hint="@string/login"
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:layout_below="@+id/login"
+            android:id="@+id/password"
+            android:hint="@string/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_below="@+id/password"
+            android:text="@string/in"
+            android:onClick="onSignIn"
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+</RelativeLayout>

@@ -32,6 +32,7 @@ dependencies {
 
     compile 'com.google.firebase:firebase-database:9.0.0'
     compile 'com.firebaseui:firebase-ui-database:0.4.0'
+    compile 'com.google.firebase:firebase-auth:9.8.0'
     // https://mvnrepository.com/artifact/net.sf.opencsv/opencsv
     compile group: 'net.sf.opencsv', name: 'opencsv', version: '2.3'
 
