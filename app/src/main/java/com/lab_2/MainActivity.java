@@ -248,6 +248,14 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         String s = "efefefefe";
     }
 
+    public void startService(View view){
+        startService(new Intent(this, MyService.class));
+    }
+
+    public void stopService(View view){
+        stopService(new Intent(this, MyService.class));
+    }
+
 
     /*@Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
