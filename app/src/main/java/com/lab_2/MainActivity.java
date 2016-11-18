@@ -33,7 +33,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
 
 public class MainActivity extends ActionBarActivity implements ValueEventListener, ChildEventListener, AdapterView.OnItemClickListener {
     private static final String PArTICIPANTS_CHILD_KEY = "Participants";
@@ -55,10 +54,7 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     private AlertDialog.Builder ad;
     private String SearchText;
     private Query query;
-    private  MyTask task;
 
-    private MyTimerTask myTimerTask;
-    private Timer timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,11 +65,7 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         context = getApplicationContext();
         MeetingsList = (ListView) findViewById(R.id.meeting_list);
         MeetingsList.setOnItemClickListener(this);
-        task = new MyTask();//способ1
 
-        myTimerTask = new MyTimerTask();
-        timer = new Timer();
-        //timer.schedule(myTimerTask,1000,5000);
         random = new Random();
         mDatabase.addValueEventListener(this);
     }

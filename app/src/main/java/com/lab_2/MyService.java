@@ -6,7 +6,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.util.concurrent.TimeUnit;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by alma0516 on 11/18/2016.
@@ -15,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 public class MyService extends Service
 {
     public static final String LOG_TAG = "MY_SERVICE";
+    private Timer timer;
+    private TimerTask task;
 
     @Nullable
     @Override
@@ -26,6 +29,8 @@ public class MyService extends Service
     @Override
     public void onCreate() {
         Log.d(LOG_TAG, "onCreate");
+        timer = new Timer(true);
+        task = new MyTask();
         super.onCreate();
     }
 
@@ -49,7 +54,14 @@ public class MyService extends Service
     void someTask(){
         new Thread(new Runnable() {
             public void run() {
-                for (int i = 1; i<=5; i++) {
+                Log.d(LOG_TAG,"Timer task STARTED");
+                timer.scheduleAtFixedRate(task, 0, 10*1000);
+                try {
+                    Thread.sleep(60000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                /*for (int i = 1; i<=5; i++) {
                     Log.d(LOG_TAG, "i = " + i);
                     Log.d(LOG_TAG,"onTaskMethod");
                     try {
@@ -57,15 +69,17 @@ public class MyService extends Service
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }
-                stopSelf();//грохает сам себя и вызывает дестрой
+                }*/
+                //stopSelf();//грохает сам себя и вызывает дестрой
             }
         }).start();
     }
 
     @Override
     public void onDestroy() {
+        timer.cancel();
         Log.d(LOG_TAG,"On destroy method");
         super.onDestroy();
+        Log.d(LOG_TAG,"Сервис уничтожен");
     }
 }

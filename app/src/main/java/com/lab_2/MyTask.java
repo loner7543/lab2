@@ -1,28 +1,20 @@
 package com.lab_2;
 
-import android.os.AsyncTask;
-import android.widget.Toast;
+import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by Александр on 24.10.2016.
  */
 
-public class MyTask extends AsyncTask<Void,Void,List<Meeting>> implements ValueEventListener {//<Params, Progress, Result>
+public class MyTask extends TimerTask{
+    private static final String LOG_KEY= "TimerTask";
     private List<Meeting> NewData;
     private DatabaseReference databaseReference;
 
@@ -32,18 +24,15 @@ public class MyTask extends AsyncTask<Void,Void,List<Meeting>> implements ValueE
         }
 
     }
-    @Override
-    protected List<Meeting> doInBackground(Void... voids) {
-        return null;
-    }
 
     @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
-
-    }
-
-    @Override
-    public void onCancelled(DatabaseError databaseError) {
-
+    public void run() {
+        Log.d(LOG_KEY,"TimerTask начал свое выполнение в:" + new Date());
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.d(LOG_KEY,"TimerTask закончил свое выполнение в:" + new Date());
     }
 }
