@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
@@ -37,6 +39,9 @@ import java.util.Random;
 public class MainActivity extends ActionBarActivity implements ValueEventListener, ChildEventListener, AdapterView.OnItemClickListener {
     private static final String PArTICIPANTS_CHILD_KEY = "Participants";
     private static final String TAG = "MainActivityLog";
+    private ConnectivityManager cm;
+    private boolean isNetworkAvailable = false;
+    private NetworkInfo networkInfo;
 
     private DatabaseReference mDatabase;
     private Intent NotificationIntent;
@@ -59,6 +64,15 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        context = MainActivity.this;
+        cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        networkInfo =cm.getActiveNetworkInfo();
+        isNetworkAvailable = networkInfo.isConnectedOrConnecting();
+        if (!isNetworkAvailable){
+            Log.d(TAG,"Сеть недоступна");
+        }
+        boolean isWiFi = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
         mDatabase = FirebaseDatabase.getInstance().getReference();//все ок - подключает
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
