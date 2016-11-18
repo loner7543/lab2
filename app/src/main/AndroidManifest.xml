@@ -36,7 +36,9 @@
         <service
             android:name=".MyService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".NetworkLostActivity"></activity>
     </application>
 
 </manifest>
