@@ -1,5 +1,6 @@
 package com.lab_2;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -83,5 +84,16 @@ public class Meeting {
 
     public void setKey(String key) {
         Key = key;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(Key).append(" ").append(Name).append("");
+        stringBuilder.append(Description);
+        for (Participant participant:Participants){
+            stringBuilder.append(participant.toString();
+        }
+        return super.toString();
     }
 }

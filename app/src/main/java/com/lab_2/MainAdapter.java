@@ -72,9 +72,9 @@ public class MainAdapter extends BaseAdapter {
                 TextView Type = (TextView) row.findViewById(R.id.Priority_Item_Desc);
                 Type.setText(currMeet.getType());
 
-                ListView parList = (ListView) row.findViewById(R.id.persons_list);
+               /* ListView parList = (ListView) row.findViewById(R.id.persons_list);
                 ParticipantAdapter participantAdapter = new ParticipantAdapter(ctx,R.layout.partcipant_item,currMeet.getParticipants());
-                parList.setAdapter(participantAdapter);
+                parList.setAdapter(participantAdapter);*/
 
         }
         return row;

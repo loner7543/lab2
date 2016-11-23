@@ -55,4 +55,5 @@
     <string name="inc_login">Incorrect login</string>
     <string name="inc_pass">Incorrect password</string>
     <string name="not_network">Сеть отсутствует. Повториите попытку подключения позже</string>
+    <string name="try_again">Повторить попытку</string>
 </resources>
