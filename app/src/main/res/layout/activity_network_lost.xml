@@ -10,4 +10,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.lab_2.NetworkLostActivity">
 
+    <TextView
+        android:id="@+id/lost_netwirk"
+        android:text="@string/not_network"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:src="@drawable/no-wifi-icon"
+        android:layout_below="@+id/lost_netwirk"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>
