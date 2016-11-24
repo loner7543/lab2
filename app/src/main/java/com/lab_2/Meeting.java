@@ -1,7 +1,5 @@
 package com.lab_2;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -88,12 +86,16 @@ public class Meeting {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Key).append(" ").append(Name).append("");
-        stringBuilder.append(Description);
+        StringBuilder sb = new StringBuilder();
+        sb.append(Key).append("\n").append("Meeting name  ").append(Name).append("\n");
+        sb.append("Description  ").append(Description).append("\n");
+        sb.append("From date  ").append(FromDate).append("\n");
+        sb.append("To date  ").append(ToDate).append("\n");
+        sb.append("Type  ").append(Type).append("\n");
+        sb.append("Participants").append("\n");
         for (Participant participant:Participants){
-            stringBuilder.append(participant.toString();
+            sb.append(participant.toString());
         }
-        return super.toString();
+        return sb.toString();
     }
 }

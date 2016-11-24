@@ -45,10 +45,11 @@ public class Participant {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.Fio);
-        stringBuilder.append(" ");
-        stringBuilder.append(Position);
-        return stringBuilder.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("FIO  ").append(Fio);
+        sb.append("\n");
+
+        sb.append("Position  ").append(Position).append("\n");
+        return sb.toString();
     }
 }

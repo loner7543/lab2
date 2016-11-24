@@ -26,7 +26,8 @@ public class OpenFileDialog extends AlertDialog.Builder {
     private List<File> files = new ArrayList<File>();
     private FileAdapter FileAdapter;
     private List<Meeting> ExportData;
-    private List<String> exportedData;
+    private String exportedFileName = "MyFile";
+    private List<String[]> exportedData;
 
     public OpenFileDialog(Context context, final List<Meeting> exp) {
         super(context);
@@ -36,17 +37,19 @@ public class OpenFileDialog extends AlertDialog.Builder {
         setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                exportedData = new ArrayList<String>();
-                String s = FileAdapter.getDeltaPath()+FILE_SEPARATOR;//тут та папка которую вызерет пользователь
+                exportedData = new ArrayList<String[]>();
+                // готовим данные для экспорта
+                for (Meeting m:exp){
+                    exportedData.add(new String[]{m.toString()});
+                }
+                String s = FILE_SEPARATOR+FileAdapter.getDeltaPath()+FILE_SEPARATOR;//тут та папка которую вызерет пользователь
                 currentPath = currentPath+s;
-                File resExport = new File(currentPath,"Result");//создает директорию а не файл !!!!!
+                File resExport = new File(currentPath,exportedFileName);//создает директорию а не файл !!!!!
                 try {
                     if(resExport.createNewFile())
                     {
                         CSVWriter csvWriter = new CSVWriter(new FileWriter(resExport));
-                        for (Meeting meeting:exp){
-                            csvWriter.writeAll(exportedData);
-                        }
+                        csvWriter.writeAll(exportedData);
                         csvWriter.close();
 
 
