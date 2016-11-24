@@ -55,17 +55,6 @@
     <Button
         android:focusable = "false"
         android:focusableInTouchMode = "false"
-        android:id="@+id/cancel_meat"
-        android:text="@string/cancel_meat"
-        android:onClick="onDeleteMeet"
-        android:layout_below="@+id/MainScroll"
-        android:layout_toRightOf="@+id/crate_meat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:focusable = "false"
-        android:focusableInTouchMode = "false"
         android:id="@+id/export_btn"
         android:text="@string/ExportBtn"
         android:onClick="exportToCSV"
@@ -82,9 +71,22 @@
         android:layout_height="wrap_content" />
 
     <Button
+        android:id="@+id/stopBtn"
         android:layout_below="@+id/startService"
         android:onClick="stopService"
         android:text="Stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
+        android:id="@+id/cancel_meat"
+        android:text="@string/cancel_meat"
+        android:onClick="onDeleteMeet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/get_all_meat"
+        android:layout_alignEnd="@+id/crate_meat"
+        android:layout_marginTop="16dp" />
 </RelativeLayout>

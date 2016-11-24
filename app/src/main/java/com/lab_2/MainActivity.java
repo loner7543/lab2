@@ -152,15 +152,15 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     }
 
     public void onDeleteMeet(View view){
-       Meeting meeting = (Meeting) MeetingsList.getSelectedItem();
-       // MeetingsList.getItem
-        //mDatabase.child("Meet4").removeValue();
+       Meeting meeting = adapter.getMeetingItemByName();
+        mDatabase.child(meeting.getName()).removeValue();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {// вызывается при привязке данных и каждый раз когда данные меняются
         Log.d(TAG,"Data read start");
-        List<Meeting> allMeatings = new LinkedList<>();
+        List<Meeting> allMeetings = new LinkedList<>();
         List<Participant> participants = null;
         Iterable<DataSnapshot> iterable = dataSnapshot.getChildren();
         Iterator<DataSnapshot> chIter = iterable.iterator();
@@ -189,9 +189,9 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
                 }
             }
             meeting.setParticipants(participants);
-            allMeatings.add(meeting);
+            allMeetings.add(meeting);
         }
-        this.Data = allMeatings;
+        this.Data = allMeetings;
         adapter = new MainAdapter(this, R.layout.list_item, Data);
         MeetingsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
