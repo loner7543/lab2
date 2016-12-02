@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.lab_2.domain.Meeting;
 
 import java.util.Date;
 import java.util.List;

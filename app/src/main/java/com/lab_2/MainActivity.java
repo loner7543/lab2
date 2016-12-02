@@ -27,6 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.lab_2.domain.Meeting;
+import com.lab_2.domain.Participant;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -35,6 +37,7 @@ import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends ActionBarActivity implements ValueEventListener, ChildEventListener, AdapterView.OnItemClickListener {
+    public static final int REQUEST_CODE_REFRESH = 1;
     private static final String PArTICIPANTS_CHILD_KEY = "Participants";
     private static final String TAG = "MainActivityLog";
     private DatabaseReference mDatabase;
@@ -115,7 +118,16 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
 
     public void onCreateMeat(View view) {
         LaunchIntent = new Intent(this, CreateMeeting.class);
-        startActivity(LaunchIntent);
+        startActivityForResult(LaunchIntent,REQUEST_CODE_REFRESH);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG,"requestCode  "+requestCode+"resultCode  "+resultCode);
+        if (resultCode==RESULT_OK){
+            adapter.notifyDataSetChanged();
+            onShowNotification();
+        }
     }
 
     public void getAllMeat(View view) {
@@ -124,19 +136,6 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     public void exportToCSV(View view) throws IOException {
         OpenFileDialog fileDialog = new OpenFileDialog(this,Data);
         fileDialog.show();
-        //select * query
-        /*Query query = null;
-        query = mDatabase.equalTo(true,"Name");
-        String rootDir = "/";//кень файловой системы
-        String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();//storade/emulated/0
-        String filaName = "Lab2Export";
-        File resExport = new File(baseDir,filaName);//создает директорию а не файл !!!!!
-        if(resExport.createNewFile())
-        {
-            CSVWriter csvWriter = new CSVWriter(new FileWriter(resExport));
-            //csvWriter.writeNext();
-
-        }*/
     }
 
     public void onDeleteMeet(View view){

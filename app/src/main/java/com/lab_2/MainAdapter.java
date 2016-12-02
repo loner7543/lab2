@@ -11,6 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lab_2.domain.Meeting;
+
 import java.util.List;
 
 /**
@@ -97,7 +99,7 @@ public class MainAdapter extends BaseAdapter implements View.OnClickListener {
     public Meeting getMeetingItemByName(){
         Meeting res = null;
         for (Meeting m:Data){
-            if (m.getName().endsWith(selectedMeetingName)){
+            if (m.getName().equals(selectedMeetingName)){
                 res = m;
             }
         }

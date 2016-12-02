@@ -1,5 +1,6 @@
 package com.lab_2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Spinner;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.lab_2.domain.Participant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,7 @@ public class CreateMeeting extends AppCompatActivity {
     private String Fio;
     private String Position;
     private int i = 4;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,17 +67,18 @@ public class CreateMeeting extends AppCompatActivity {
         mDatabase.child(Fields.MEET_NAME+i).child(Fields.FROM_DATE).setValue(FromDateText);
         mDatabase.child(Fields.MEET_NAME+i).child(Fields.TO_DATE).setValue(ToDateText);
         mDatabase.child(Fields.MEET_NAME+i).child(Fields.TYPE).setValue(Type);
-        String key = mDatabase.child("posts").push().getKey();
-
         int j = 1;
-        //Participant post = new Participant("newFio","NewDesc");
-        //Map<String, String> postValues = post.toMap();
-        //mDatabase.child("Meet4").child(Fields.PARTICIPANTS).child(Fields.PARTICIPANT+j).push().setValue(postValues);//
-       // childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
-
-        //mDatabase.updateChildren(childUpdates);
+        for (Participant participant:newParticipants){
+            mDatabase.child(Fields.MEET_NAME+i).child(Fields.PARTICIPANTS).child(Fields.PARTICIPANT+j).child(Fields.FIO).setValue(participant.getFio());
+            mDatabase.child(Fields.MEET_NAME+i).child(Fields.PARTICIPANTS).child(Fields.PARTICIPANT+j).child(Fields.POSITION).setValue(participant.getPosition());
+            j++;
+        }
+        i++;
+        j=0;
         newParticipants.clear();
-        //i++;
+        intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     public void onAddNewParticipant(View view){
@@ -86,12 +90,5 @@ public class CreateMeeting extends AppCompatActivity {
 
         PartFio.setText("");
         PartPos.setText("");
-        //String fio =
-        /*LinearLayout.LayoutParams linLayoutParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        View item =  inflater.inflate(R.layout.partcipant_item,null,false);
-        ParLayout.addView(item,linLayoutParam);
-        linLayoutParam = null;
-        item = null;*/
-
     }
 }

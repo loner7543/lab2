@@ -1,4 +1,4 @@
-package com.lab_2;
+package com.lab_2.domain;
 
 import java.util.HashMap;
 import java.util.Map;

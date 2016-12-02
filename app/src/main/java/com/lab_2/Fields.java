@@ -13,4 +13,6 @@ public interface Fields {
     public static final String MEET_NAME = "Meet";
     public static final String PARTICIPANTS = "Participants";
     public static final String PARTICIPANT = "Participant";
+    public static final String FIO = "Fio";
+    public static final String POSITION = "Position";
 }

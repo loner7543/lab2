@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Environment;
 
+import com.lab_2.domain.Meeting;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

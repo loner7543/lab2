@@ -1,4 +1,4 @@
-package com.lab_2;
+package com.lab_2.domain;
 
 /**
  * Created by Александр on 16.11.2016.

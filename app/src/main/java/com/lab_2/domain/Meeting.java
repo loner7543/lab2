@@ -1,4 +1,6 @@
-package com.lab_2;
+package com.lab_2.domain;
+
+import com.lab_2.domain.Participant;
 
 import java.util.List;
 

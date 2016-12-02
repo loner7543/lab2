@@ -1,5 +1,6 @@
 package com.lab_2;
 
+import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -13,17 +14,28 @@ import java.util.TimerTask;
  * Created by alma0516 on 11/18/2016.
  */
 
-public class MyService extends Service
+//посылать интент своему классу
+
+public class MyService extends IntentService
 {
     public static final String LOG_TAG = "MY_SERVICE";
     private Timer timer;
     private TimerTask task;
+
+    public MyService(String name) {
+        super(name);
+    }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(LOG_TAG, "onBind");
         return null;
+    }
+
+    @Override
+    protected void onHandleIntent(Intent intent) {
+
     }
 
     @Override
