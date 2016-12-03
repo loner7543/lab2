@@ -34,8 +34,11 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
+//BroadcastResiver он будет слушать системеык вызовы и стартовать до старта самой активити
+//Аларм менеджер пинимает интент с твоим классом интент сервиса и каждые 10 мин шлет интент интент сервису
 public class MainActivity extends ActionBarActivity implements ValueEventListener, ChildEventListener, AdapterView.OnItemClickListener {
     public static final int REQUEST_CODE_REFRESH = 1;
     private static final String PArTICIPANTS_CHILD_KEY = "Participants";
@@ -73,6 +76,7 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
 
         random = new Random();
         mDatabase.addValueEventListener(this);
+        mDatabase.addChildEventListener(this);
     }
 
     @Override
@@ -218,7 +222,36 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     //методы для работы со списком участников
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+      /* Map<Object,Object> map = dataSnapshot.getValue(Map.class);
+        List<Participant> participants = null;
+        Iterable<DataSnapshot> iterable = dataSnapshot.getChildren();
+        Iterator<DataSnapshot> chIter = iterable.iterator();
 
+        Iterable<DataSnapshot> CHIterable;
+        Iterator<DataSnapshot> CHIT;
+
+            DataSnapshot snapshot = chIter.next();
+            Meeting meeting = new Meeting();
+            meeting.setKey(snapshot.getKey());
+            meeting.setName((String) snapshot.child(Fields.NAME).getValue());
+            meeting.setDescription((String) snapshot.child(Fields.DESCRIPTION).getValue());
+            meeting.setFromDate((String) snapshot.child(Fields.FROM_DATE).getValue());
+            meeting.setToDate((String) snapshot.child(Fields.TO_DATE).getValue());
+            meeting.setType((String) snapshot.child(Fields.TYPE).getValue());
+            if (snapshot.hasChild(PArTICIPANTS_CHILD_KEY)) {
+                DataSnapshot ps = snapshot.child(Fields.PARTICIPANTS);
+                CHIterable = ps.getChildren();
+                CHIT = CHIterable.iterator();
+                participants = new LinkedList<>();
+                while (CHIT.hasNext()) {
+                    DataSnapshot psk = CHIT.next();
+                    Participant participant = psk.getValue(Participant.class);
+                    participants.add(participant);
+                }
+            meeting.setParticipants(participants);
+        }
+        Data.add(meeting);
+        adapter.notifyDataSetChanged();*/
     }
 
     @Override
