@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.lab_2.domain.Meeting;
 import com.lab_2.domain.Participant;
 import com.lab_2.manager.MyReciver;
+import com.lab_2.manager.NetworkService;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -65,13 +66,16 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     private Intent alarmIntent;
     private PendingIntent alarmPendingIntent;
 
+    private Intent networkIntent;
+    private PendingIntent networkPendingIntent;
+    private AlarmManager networkManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         context = MainActivity.this;
-     //   startService(new Intent(this, NetworkService.class));
         mDatabase = FirebaseDatabase.getInstance().getReference();//все ок - подключает
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,6 +91,11 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         alarmPendingIntent = PendingIntent.getBroadcast(this,0,alarmIntent,0);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,2000,1000,alarmPendingIntent);
+
+        networkIntent =  new Intent(this,NetworkService.class);
+        networkPendingIntent = PendingIntent.getBroadcast(this,0,networkIntent,0);
+        networkManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        //networkManager.setRepeating(AlarmManager.RTC_WAKEUP,2000,1000,networkPendingIntent);
     }
 
     @Override
