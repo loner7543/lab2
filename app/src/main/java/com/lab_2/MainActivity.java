@@ -1,5 +1,6 @@
 package com.lab_2;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -29,12 +30,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.lab_2.domain.Meeting;
 import com.lab_2.domain.Participant;
+import com.lab_2.manager.MyReciver;
 
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 //BroadcastResiver он будет слушать системеык вызовы и стартовать до старта самой активити
@@ -60,6 +61,10 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     private String SearchText;
     private Query query;
 
+    private AlarmManager alarmManager;
+    private Intent alarmIntent;
+    private PendingIntent alarmPendingIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +82,11 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         random = new Random();
         mDatabase.addValueEventListener(this);
         mDatabase.addChildEventListener(this);
+
+        alarmIntent = new Intent(this, MyReciver.class);
+        alarmPendingIntent = PendingIntent.getBroadcast(this,0,alarmIntent,0);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,2000,1000,alarmPendingIntent);
     }
 
     @Override
