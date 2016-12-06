@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -75,9 +76,16 @@ public class MainAdapter extends BaseAdapter implements View.OnClickListener {
                 TextView Type = (TextView) row.findViewById(R.id.Priority_Item_Desc);
                 Type.setText(currMeet.getType());
 
-                ListView parList = (ListView) row.findViewById(R.id.persons_list);
+            CheckBox isVisit = (CheckBox) row.findViewById(R.id.check_user);
+            if (currMeet.isGoing()){
+                isVisit.setChecked(true);
+            }
+            else isVisit.setChecked(false);
+
+
+              /*  ListView parList = (ListView) row.findViewById(R.id.persons_list);
                 ParticipantAdapter participantAdapter = new ParticipantAdapter(ctx,R.layout.partcipant_item,currMeet.getParticipants());
-                parList.setAdapter(participantAdapter);
+                parList.setAdapter(participantAdapter);*/
 
         }
         return row;

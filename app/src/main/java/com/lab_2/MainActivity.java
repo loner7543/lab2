@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,7 +42,7 @@ import java.util.Random;
 
 //BroadcastResiver он будет слушать системеык вызовы и стартовать до старта самой активити
 //Аларм менеджер пинимает интент с твоим классом интент сервиса и каждые 10 мин шлет интент интент сервису
-public class MainActivity extends ActionBarActivity implements ValueEventListener, ChildEventListener, AdapterView.OnItemClickListener {
+public class MainActivity extends ActionBarActivity implements  ChildEventListener, AdapterView.OnItemClickListener {
     public static final int REQUEST_CODE_REFRESH = 1;
     private static final String PArTICIPANTS_CHILD_KEY = "Participants";
     private static final String TAG = "MainActivityLog";
@@ -77,14 +78,16 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
 
         context = MainActivity.this;
         mDatabase = FirebaseDatabase.getInstance().getReference();//все ок - подключает
+        MeetingsList = (ListView) findViewById(R.id.meeting_list);
+        Data = new LinkedList<Meeting>();
+        adapter = new MainAdapter(this, R.layout.list_item, Data);
+        MeetingsList.setAdapter(adapter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context = getApplicationContext();
-        MeetingsList = (ListView) findViewById(R.id.meeting_list);
         MeetingsList.setOnItemClickListener(this);
 
         random = new Random();
-        mDatabase.addValueEventListener(this);
         mDatabase.addChildEventListener(this);
 
         alarmIntent = new Intent(this, MyReciver.class);
@@ -104,10 +107,6 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         return true;
     }
 
-  /*  @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        return this.adapter.getItems();
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -154,6 +153,8 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     }
 
     public void getAllMeat(View view) {
+      /*  DatabaseReference child = mDatabase.child(Fields.DB_KEY);
+        child.getDatabase().*/
     }
 
     public void exportToCSV(View view) throws IOException {
@@ -167,47 +168,6 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {// вызывается при привязке данных и каждый раз когда данные меняются
-        Log.d(TAG,"Data read start");
-        List<Meeting> allMeetings = new LinkedList<>();
-        List<Participant> participants = null;
-        Iterable<DataSnapshot> iterable = dataSnapshot.getChildren();
-        Iterator<DataSnapshot> chIter = iterable.iterator();
-
-        Iterable<DataSnapshot> CHIterable;
-        Iterator<DataSnapshot> CHIT;
-
-        while (chIter.hasNext()){
-            DataSnapshot snapshot = chIter.next();
-            Meeting meeting = new Meeting();
-            meeting.setKey(snapshot.getKey());
-            meeting.setName((String) snapshot.child(Fields.NAME).getValue());
-            meeting.setDescription((String) snapshot.child(Fields.DESCRIPTION).getValue());
-            meeting.setFromDate((String) snapshot.child(Fields.FROM_DATE).getValue());
-            meeting.setToDate((String) snapshot.child(Fields.TO_DATE).getValue());
-            meeting.setType((String) snapshot.child(Fields.TYPE).getValue());
-            if (snapshot.hasChild(PArTICIPANTS_CHILD_KEY)){
-                DataSnapshot ps = snapshot.child("Participants");
-                CHIterable = ps.getChildren();
-                CHIT = CHIterable.iterator();
-                participants =  new LinkedList<>();
-                while (CHIT.hasNext()){
-                    DataSnapshot psk = CHIT.next();
-                    Participant participant = psk.getValue(Participant.class);
-                    participants.add(participant);
-                }
-            }
-            meeting.setParticipants(participants);
-            allMeetings.add(meeting);
-        }
-        this.Data = allMeetings;
-        adapter = new MainAdapter(this, R.layout.list_item, Data);
-        MeetingsList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        Log.d(TAG,"Data read sucs");
-        onShowNotification();
-    }
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
@@ -241,51 +201,70 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
     //методы для работы со списком участников
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-      /* Map<Object,Object> map = dataSnapshot.getValue(Map.class);
+        long count = dataSnapshot.getChildrenCount();
         List<Participant> participants = null;
-        Iterable<DataSnapshot> iterable = dataSnapshot.getChildren();
-        Iterator<DataSnapshot> chIter = iterable.iterator();
-
         Iterable<DataSnapshot> CHIterable;
         Iterator<DataSnapshot> CHIT;
-
-            DataSnapshot snapshot = chIter.next();
-            Meeting meeting = new Meeting();
-            meeting.setKey(snapshot.getKey());
-            meeting.setName((String) snapshot.child(Fields.NAME).getValue());
-            meeting.setDescription((String) snapshot.child(Fields.DESCRIPTION).getValue());
-            meeting.setFromDate((String) snapshot.child(Fields.FROM_DATE).getValue());
-            meeting.setToDate((String) snapshot.child(Fields.TO_DATE).getValue());
-            meeting.setType((String) snapshot.child(Fields.TYPE).getValue());
-            if (snapshot.hasChild(PArTICIPANTS_CHILD_KEY)) {
-                DataSnapshot ps = snapshot.child(Fields.PARTICIPANTS);
-                CHIterable = ps.getChildren();
-                CHIT = CHIterable.iterator();
-                participants = new LinkedList<>();
-                while (CHIT.hasNext()) {
-                    DataSnapshot psk = CHIT.next();
-                    Participant participant = psk.getValue(Participant.class);
-                    participants.add(participant);
-                }
-            meeting.setParticipants(participants);
+        Meeting meeting = new Meeting();
+        meeting.setKey(dataSnapshot.getKey());
+        meeting.setName((String) dataSnapshot.child(Fields.NAME).getValue());
+        meeting.setDescription((String) dataSnapshot.child(Fields.DESCRIPTION).getValue());
+        meeting.setFromDate((String) dataSnapshot.child(Fields.FROM_DATE).getValue());
+        meeting.setToDate((String) dataSnapshot.child(Fields.TO_DATE).getValue());
+        meeting.setType((String) dataSnapshot.child(Fields.TYPE).getValue());
+        String checked = (String) dataSnapshot.child(Fields.IS_GOING).getValue();
+        if (checked.equals(Fields.YES)){
+            meeting.setGoing(true);
         }
+        else meeting.setGoing(false);
+        if (dataSnapshot.hasChild(PArTICIPANTS_CHILD_KEY)) {
+            DataSnapshot ps = dataSnapshot.child(Fields.PARTICIPANTS);
+            CHIterable = ps.getChildren();
+            CHIT = CHIterable.iterator();
+            participants = new LinkedList<>();
+            while (CHIT.hasNext()) {
+                DataSnapshot psk = CHIT.next();
+                Participant participant = psk.getValue(Participant.class);
+                participants.add(participant);
+            }
+        }
+        meeting.setParticipants(participants);
         Data.add(meeting);
-        adapter.notifyDataSetChanged();*/
+        adapter.notifyDataSetChanged();
+        Log.d(TAG,"Data read sucs");
     }
 
     @Override
     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+        Log.d(TAG,"On child changed");
+        Meeting selectedMeet = null;
+        for (Meeting m:Data){
+            if (m.getKey().equals(dataSnapshot.getKey())){
+                selectedMeet = m;
+            }
+        }
+        String go;
     }
 
     @Override
     public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+        Log.d(TAG,"Data size  "+Data.size());
+        Meeting meeting = new Meeting();
+        Meeting removed = null;
+        meeting.setKey(dataSnapshot.getKey());
+        for (Meeting d:Data){
+            if (d.getKey().equals(meeting.getKey())){
+                removed = d;
+            }
+        }
+        Data.remove(removed);
+        adapter.notifyDataSetChanged();
+        Log.d(TAG,"Data size  "+Data.size());
     }
 
     @Override
     public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+        Log.d(TAG,"On child moved method");
     }
 
     @Override
@@ -301,11 +280,5 @@ public class MainActivity extends ActionBarActivity implements ValueEventListene
         stopService(new Intent(this, MyService.class));
     }
 
-
-    /*@Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        int f = 2;
-        String d = "e";
-    }*/
 
 }

@@ -5,11 +5,15 @@ package com.lab_2;
  */
 
 public interface Fields {
+    public static final String DB_KEY = "meetingapp-2f339";
     public static final String NAME = "Name";
     public static final String DESCRIPTION = "Description";
     public static final String FROM_DATE = "FromDate";
     public static final String TO_DATE = "ToDate";
     public static final String TYPE = "Type";
+    public static final  String IS_GOING = "IsVisit";
+    String YES = "Yes";
+    String NO = "No";
     public static final String MEET_NAME = "Meet";
     public static final String PARTICIPANTS = "Participants";
     public static final String PARTICIPANT = "Participant";

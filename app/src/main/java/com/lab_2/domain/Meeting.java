@@ -16,6 +16,7 @@ public class Meeting {
     private String ToDate;
     private String Type;
     private List<Participant> Participants;
+    private boolean isGoing;//показывает будет пользователь учавствовать или нет
 
     public Meeting(){
 
@@ -84,6 +85,14 @@ public class Meeting {
 
     public void setKey(String key) {
         Key = key;
+    }
+
+    public boolean isGoing() {
+        return isGoing;
+    }
+
+    public void setGoing(boolean going) {
+        isGoing = going;
     }
 
     @Override

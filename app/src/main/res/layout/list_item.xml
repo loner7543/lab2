@@ -137,7 +137,7 @@
             android:layout_height="wrap_content"></ListView>
     </ScrollView>
 
-    <!--<CheckBox
+    <CheckBox
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:id="@+id/check_user"
@@ -145,7 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/join"
         android:layout_alignBottom="@+id/join"
-        android:layout_toEndOf="@+id/join" />-->
+        android:layout_toEndOf="@+id/join" />
     <View
         android:focusable = "false"
         android:focusableInTouchMode = "false"
