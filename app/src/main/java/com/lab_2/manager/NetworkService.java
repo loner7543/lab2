@@ -38,12 +38,12 @@ public class NetworkService extends IntentService {
         checkNetwork();
     }
 
-
+//Проверяет включена ли сеть. Берем станд сервис у системы и проверяем. Если сети нет - показываем активити
     public void checkNetwork() {
         cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         networkInfo =cm.getActiveNetworkInfo();//null - сеть недоступна
         if (networkInfo==null){
-            Log.d(NETWORK_SERVICE_LOG,"Сеть доступна");
+            Log.d(NETWORK_SERVICE_LOG,"Сеть недоступна");
             Intent networtCrach = new Intent(this,NetworkLostActivity.class);
             startActivity(networtCrach);
 

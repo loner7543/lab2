@@ -93,12 +93,13 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         alarmIntent = new Intent(this, MyReciver.class);
         alarmPendingIntent = PendingIntent.getBroadcast(this,0,alarmIntent,0);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,2000,1000,alarmPendingIntent);
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,2000,1000,alarmPendingIntent);// повторяет периодически действие направляя интент слушателю
 
         networkIntent =  new Intent(this,NetworkService.class);
         networkPendingIntent = PendingIntent.getBroadcast(this,0,networkIntent,0);
         networkManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        //networkManager.setRepeating(AlarmManager.RTC_WAKEUP,2000,1000,networkPendingIntent);
+        //networkManager.setRepeating(AlarmManager.RTC_WAKEUP,2000,1000,networkPendingIntent);// та же штука для контроля сети
+        //можно не делать, но метод проверяющий не отвалилось ли чего придется вызывать перед каждым походом в сеть
     }
 
     @Override
