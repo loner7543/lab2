@@ -39,13 +39,16 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".NetworkLostActivity"></activity>
-        <receiver android:name=".manager.MyReciver" >
+        <activity android:name=".NetworkLostActivity" />
+
+        <receiver android:name=".manager.MyReciver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>

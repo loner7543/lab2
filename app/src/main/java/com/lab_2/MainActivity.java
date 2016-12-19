@@ -112,26 +112,8 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
-            View promptView = layoutInflater.inflate(R.layout.serch_dialog, null);
-            ad = new AlertDialog.Builder(MainActivity.this);
-            ad.setView(promptView);
-            final EditText editText = (EditText) promptView.findViewById(R.id.FindMeet);
-            ad.setCancelable(false)
-                    .setPositiveButton(R.string.find_btn, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            SearchText = editText.getText().toString();
-                            query = mDatabase.equalTo(SearchText);
-                        }
-                    })
-                    .setNegativeButton(R.string.btn_cancel,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-            AlertDialog alert = ad.create();
-            alert.show();
+            Intent intent = new Intent(this,SearchActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -213,10 +195,10 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         meeting.setToDate((String) dataSnapshot.child(Fields.TO_DATE).getValue());
         meeting.setType((String) dataSnapshot.child(Fields.TYPE).getValue());
         String checked = (String) dataSnapshot.child(Fields.IS_GOING).getValue();
-        if (checked.equals(Fields.YES)){
+        /*if (checked.equals(Fields.YES)){
             meeting.setGoing(true);
         }
-        else meeting.setGoing(false);
+        else meeting.setGoing(false);*/
         if (dataSnapshot.hasChild(PArTICIPANTS_CHILD_KEY)) {
             DataSnapshot ps = dataSnapshot.child(Fields.PARTICIPANTS);
             CHIterable = ps.getChildren();

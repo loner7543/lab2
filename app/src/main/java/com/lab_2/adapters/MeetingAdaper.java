@@ -84,6 +84,7 @@ public class MeetingAdaper extends BaseAdapter implements View.OnClickListener {
                 isVisit.setChecked(true);
             }
             else isVisit.setChecked(false);
+        if (currMeet.getParticipants()!=null){
             for (Participant participant:currMeet.getParticipants()){
                 linearLayout = (LinearLayout) row.findViewById(R.id.partisipantsLayout);
                 TextView textView = new TextView(ctx);
@@ -101,6 +102,8 @@ public class MeetingAdaper extends BaseAdapter implements View.OnClickListener {
                 linearLayout.addView(positionText);
 
             }
+        }
+
         return row;
     }
 
