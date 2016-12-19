@@ -1,4 +1,4 @@
-package com.lab_2;
+package com.lab_2.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,10 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lab_2.R;
 import com.lab_2.domain.Meeting;
+import com.lab_2.domain.Participant;
 
 import java.util.List;
 
@@ -20,8 +23,8 @@ import java.util.List;
  * Created by Александр on 24.10.2016.
  */
 
-public class MainAdapter extends BaseAdapter implements View.OnClickListener {
-    private static final String TAG = "MainAdapter";
+public class MeetingAdaper extends BaseAdapter implements View.OnClickListener {
+    private static final String TAG = "MeetingAdaper";
     private Context ctx;
     private int pos;
     private  int LayResId;
@@ -29,7 +32,8 @@ public class MainAdapter extends BaseAdapter implements View.OnClickListener {
     private LayoutInflater inflater;
     private String selectedMeetingName;
     private View selectedView;
-    public MainAdapter(Context context, int resource, List<Meeting> objects) {
+    private LinearLayout linearLayout;
+    public MeetingAdaper(Context context, int resource, List<Meeting> objects) {
         this.ctx =context;
         this.LayResId = resource;
         this.Data = objects;
@@ -56,7 +60,6 @@ public class MainAdapter extends BaseAdapter implements View.OnClickListener {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        if (row==null){
                 row = inflater.inflate(LayResId,parent,false);
                 row.setOnClickListener(this);
                 Meeting currMeet = getMeeting(position);
@@ -81,13 +84,23 @@ public class MainAdapter extends BaseAdapter implements View.OnClickListener {
                 isVisit.setChecked(true);
             }
             else isVisit.setChecked(false);
+            for (Participant participant:currMeet.getParticipants()){
+                linearLayout = (LinearLayout) row.findViewById(R.id.partisipantsLayout);
+                TextView textView = new TextView(ctx);
+                textView.setText("Имя  "+participant.getFio());
+                textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
 
+                TextView devider = new TextView(ctx);
+                devider.setText("-------------");
+                textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+                linearLayout.addView(devider);
 
-              /*  ListView parList = (ListView) row.findViewById(R.id.persons_list);
-                ParticipantAdapter participantAdapter = new ParticipantAdapter(ctx,R.layout.partcipant_item,currMeet.getParticipants());
-                parList.setAdapter(participantAdapter);*/
+                TextView positionText = new TextView(ctx);
+                positionText.setText("Должность  "+participant.getPosition());
+                linearLayout.addView(textView);
+                linearLayout.addView(positionText);
 
-        }
+            }
         return row;
     }
 

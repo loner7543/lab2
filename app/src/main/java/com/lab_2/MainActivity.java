@@ -21,14 +21,13 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.lab_2.adapters.MeetingAdaper;
 import com.lab_2.domain.Meeting;
 import com.lab_2.domain.Participant;
 import com.lab_2.manager.MyReciver;
@@ -57,7 +56,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
     private Intent LaunchIntent;
     private Context context;
     private List<Meeting> Data;
-    private MainAdapter adapter;
+    private MeetingAdaper adapter;
     private Random random;
     private AlertDialog.Builder ad;
     private String SearchText;
@@ -80,7 +79,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         mDatabase = FirebaseDatabase.getInstance().getReference();//все ок - подключает
         MeetingsList = (ListView) findViewById(R.id.meeting_list);
         Data = new LinkedList<Meeting>();
-        adapter = new MainAdapter(this, R.layout.list_item, Data);
+        adapter = new MeetingAdaper(this, R.layout.list_item, Data);
         MeetingsList.setAdapter(adapter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

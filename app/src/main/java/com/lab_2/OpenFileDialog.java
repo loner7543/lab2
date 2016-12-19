@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Environment;
 
+import com.lab_2.adapters.FileAdapter;
 import com.lab_2.domain.Meeting;
 
 import java.io.File;
@@ -26,7 +27,7 @@ public class OpenFileDialog extends AlertDialog.Builder {
     public static final String FILE_SEPARATOR ="/";
     private String currentPath = Environment.getExternalStorageDirectory().getPath();
     private List<File> files = new ArrayList<File>();
-    private FileAdapter FileAdapter;
+    private com.lab_2.adapters.FileAdapter FileAdapter;
     private List<Meeting> ExportData;
     private String exportedFileName = "MyFile";
     private List<String[]> exportedData;

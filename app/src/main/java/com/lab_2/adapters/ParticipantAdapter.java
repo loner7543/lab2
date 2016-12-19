@@ -1,4 +1,4 @@
-package com.lab_2;
+package com.lab_2.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.lab_2.R;
 import com.lab_2.domain.Participant;
 
 import java.util.List;

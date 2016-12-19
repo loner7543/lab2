@@ -122,21 +122,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <ScrollView
-        android:layout_marginTop="30dp"
-        android:focusable = "false"
-        android:focusableInTouchMode = "false"
-        android:descendantFocusability="blocksDescendants"
-        android:id="@+id/scr_list"
-        android:layout_below="@+id/Priority_Item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ListView
-            android:id="@+id/persons_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></ListView>
-    </ScrollView>
-
     <CheckBox
         android:focusable="false"
         android:focusableInTouchMode="false"
@@ -146,11 +131,18 @@
         android:layout_alignBaseline="@+id/join"
         android:layout_alignBottom="@+id/join"
         android:layout_toEndOf="@+id/join" />
+
+    <LinearLayout
+        android:layout_below="@id/join"
+        android:orientation="vertical"
+        android:id="@+id/partisipantsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></LinearLayout>
     <View
         android:focusable = "false"
         android:focusableInTouchMode = "false"
         android:layout_marginTop="@dimen/dev_margin"
-        android:layout_below="@+id/scr_list"
+        android:layout_below="@+id/partisipantsLayout"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@color/dev_color" />
