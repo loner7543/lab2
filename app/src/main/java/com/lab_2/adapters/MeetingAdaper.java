@@ -80,10 +80,12 @@ public class MeetingAdaper extends BaseAdapter implements View.OnClickListener {
                 Type.setText(currMeet.getType());
 
             CheckBox isVisit = (CheckBox) row.findViewById(R.id.check_user);
+        if (isVisit!=null){
             if (currMeet.isGoing()){
                 isVisit.setChecked(true);
             }
             else isVisit.setChecked(false);
+        }
         if (currMeet.getParticipants()!=null){
             for (Participant participant:currMeet.getParticipants()){
                 linearLayout = (LinearLayout) row.findViewById(R.id.partisipantsLayout);

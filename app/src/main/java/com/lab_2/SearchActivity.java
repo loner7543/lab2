@@ -9,27 +9,28 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lab_2.adapters.MeetingAdaper;
 import com.lab_2.domain.Meeting;
+import com.lab_2.domain.Participant;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements ValueEventListener {
     private static final String KEY = "SearchLog";
     private EditText searchData;
     private Button startBtn;
     private ListView resultListView;
     private DatabaseReference mDatabase;
-    private List<Meeting> result;
+    private List<Meeting> data;
+    private List<Meeting> searchResult;
+    private MeetingAdaper meetingAdaper;
 
 
     @Override
@@ -39,25 +40,64 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         searchData = (EditText) findViewById(R.id.enter_desc);
         startBtn = (Button) findViewById(R.id.searchBtn);
+        startBtn.setText("Искать");
         resultListView = (ListView) findViewById(R.id.res_list);
+        mDatabase = FirebaseDatabase.getInstance().getReference();//все ок - подключает
+        mDatabase.addValueEventListener(this);
+        data = new LinkedList<>();
+        searchResult = new LinkedList<>();
     }
 
     public void onStartSearch(View view){
-        result = new LinkedList<>();
-        mDatabase = FirebaseDatabase.getInstance().getReference();//все ок - подключает
-        //mDatabase = new Firebase("https://meetingapp-2f339.firebaseio.com/meetingapp-2f339/");
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        for (Meeting meeting: data){
+            if (meeting.getDescription().equals(searchData.getText().toString())){
+                searchResult.add(meeting);
+            }
+        }
+        meetingAdaper = new MeetingAdaper(getApplicationContext(),R.layout.list_item,searchResult);
+        resultListView.setAdapter(meetingAdaper);
+
+
+    }
+
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        try{
+            Iterable<DataSnapshot> iterable = dataSnapshot.getChildren();
+            Iterator<DataSnapshot> chIter = iterable.iterator();
+            Iterable<DataSnapshot> CHIterable;
+            List<Participant> participants = null;
+            Iterator<DataSnapshot> CHIT;
+            while (chIter.hasNext()) {
                 Meeting meeting = new Meeting();
-                meeting.setKey(dataSnapshot.getKey());
-                meeting.setName((String) dataSnapshot.child(Fields.NAME).getValue());
+                DataSnapshot snapshot = chIter.next();
+                meeting.setName((String) snapshot.child(Fields.NAME).getValue());
+                meeting.setDescription((String) snapshot.child(Fields.DESCRIPTION).getValue());
+                meeting.setFromDate((String) snapshot.child(Fields.FROM_DATE).getValue());
+                meeting.setToDate((String) snapshot.child(Fields.TO_DATE).getValue());
+                meeting.setType((String) snapshot.child(Fields.TYPE).getValue());
+                if (snapshot.hasChild(Fields.PARTICIPANTS)){
+                    DataSnapshot ps = snapshot.child("Participants");
+                    CHIterable = ps.getChildren();
+                    CHIT = CHIterable.iterator();
+                    participants =  new LinkedList<>();
+                    while (CHIT.hasNext()){
+                        DataSnapshot psk = CHIT.next();
+                        Participant participant = psk.getValue(Participant.class);
+                        participants.add(participant);
+                    }
+                }
+                meeting.setParticipants(participants);
+                data.add(meeting);
             }
+        }
+        catch (Exception e){
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        }
+    }
 
-            }
-        });
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+        Log.d(KEY,databaseError.getMessage());
     }
 }

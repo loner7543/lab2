@@ -95,7 +95,7 @@ public class Meeting {
         isGoing = going;
     }
 
-    @Override
+   /* @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(Key).append("\n").append("Meeting name  ").append(Name).append("\n");
@@ -108,5 +108,5 @@ public class Meeting {
             sb.append(participant.toString());
         }
         return sb.toString();
-    }
+    }*/
 }
