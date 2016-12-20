@@ -4,21 +4,20 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -26,7 +25,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.lab_2.adapters.MeetingAdaper;
 import com.lab_2.domain.Meeting;
 import com.lab_2.domain.Participant;
@@ -34,6 +32,10 @@ import com.lab_2.manager.MyReciver;
 import com.lab_2.manager.NetworkService;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,8 +61,6 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
     private MeetingAdaper adapter;
     private Random random;
     private AlertDialog.Builder ad;
-    private String SearchText;
-    private Query query;
 
     private AlarmManager alarmManager;
     private Intent alarmIntent;
@@ -70,6 +70,13 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
     private PendingIntent networkPendingIntent;
     private AlarmManager networkManager;
 
+    private Calendar calendar;
+    private Date currentDate;
+    private String strDate;
+    private DateFormat dfISO;
+
+    private BroadcastReceiver broadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +85,11 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         context = MainActivity.this;
         mDatabase = FirebaseDatabase.getInstance().getReference();//все ок - подключает
         MeetingsList = (ListView) findViewById(R.id.meeting_list);
+        dfISO = new SimpleDateFormat("dd.MM.yyyy");
         Data = new LinkedList<Meeting>();
+        calendar = Calendar.getInstance();
+        currentDate = calendar.getTime();
+        strDate = dfISO.format(currentDate);
         adapter = new MeetingAdaper(this, R.layout.list_item, Data);
         MeetingsList.setAdapter(adapter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -92,7 +103,21 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         alarmIntent = new Intent(this, MyReciver.class);
         alarmPendingIntent = PendingIntent.getBroadcast(this,0,alarmIntent,0);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,2000,1000,alarmPendingIntent);// повторяет периодически действие направляя интент слушателю
+       // alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,50000,50000,alarmPendingIntent);// повторяет периодически действие направляя интент слушателю
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action  = intent.getAction();
+                if(action.equals(Intent.ACTION_TIME_TICK)){
+                    String data = intent.getExtras().getString("asd");
+                    String d = "";
+                }
+            }
+        };
+
+        IntentFilter intFilt = new IntentFilter(Intent.ACTION_TIME_TICK);
+        // регистрируем (включаем) BroadcastReceiver
+        registerReceiver(broadcastReceiver, intFilt);
 
         networkIntent =  new Intent(this,NetworkService.class);
         networkPendingIntent = PendingIntent.getBroadcast(this,0,networkIntent,0);
@@ -135,8 +160,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
     }
 
     public void getAllMeat(View view) {
-      /*  DatabaseReference child = mDatabase.child(Fields.DB_KEY);
-        child.getDatabase().*/
+
     }
 
     public void exportToCSV(View view) throws IOException {
@@ -183,37 +207,48 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
     //методы для работы со списком участников
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-        long count = dataSnapshot.getChildrenCount();
-        List<Participant> participants = null;
-        Iterable<DataSnapshot> CHIterable;
-        Iterator<DataSnapshot> CHIT;
-        Meeting meeting = new Meeting();
-        meeting.setKey(dataSnapshot.getKey());
-        meeting.setName((String) dataSnapshot.child(Fields.NAME).getValue());
-        meeting.setDescription((String) dataSnapshot.child(Fields.DESCRIPTION).getValue());
-        meeting.setFromDate((String) dataSnapshot.child(Fields.FROM_DATE).getValue());
-        meeting.setToDate((String) dataSnapshot.child(Fields.TO_DATE).getValue());
-        meeting.setType((String) dataSnapshot.child(Fields.TYPE).getValue());
-        String checked = (String) dataSnapshot.child(Fields.IS_GOING).getValue();
+        try{
+            List<Participant> participants = null;
+            Iterable<DataSnapshot> CHIterable;
+            Iterator<DataSnapshot> CHIT;
+            Meeting meeting = new Meeting();
+            meeting.setKey(dataSnapshot.getKey());
+            meeting.setName((String) dataSnapshot.child(Fields.NAME).getValue());
+            meeting.setDescription((String) dataSnapshot.child(Fields.DESCRIPTION).getValue());
+            meeting.setFromDate((String) dataSnapshot.child(Fields.FROM_DATE).getValue());
+            meeting.setToDate((String) dataSnapshot.child(Fields.TO_DATE).getValue());
+            meeting.setType((String) dataSnapshot.child(Fields.TYPE).getValue());
+            String checked = (String) dataSnapshot.child(Fields.IS_GOING).getValue();
         /*if (checked.equals(Fields.YES)){
             meeting.setGoing(true);
         }
         else meeting.setGoing(false);*/
-        if (dataSnapshot.hasChild(PArTICIPANTS_CHILD_KEY)) {
-            DataSnapshot ps = dataSnapshot.child(Fields.PARTICIPANTS);
-            CHIterable = ps.getChildren();
-            CHIT = CHIterable.iterator();
-            participants = new LinkedList<>();
-            while (CHIT.hasNext()) {
-                DataSnapshot psk = CHIT.next();
-                Participant participant = psk.getValue(Participant.class);
-                participants.add(participant);
+            if (dataSnapshot.hasChild(PArTICIPANTS_CHILD_KEY)) {
+                DataSnapshot ps = dataSnapshot.child(Fields.PARTICIPANTS);
+                CHIterable = ps.getChildren();
+                CHIT = CHIterable.iterator();
+                participants = new LinkedList<>();
+                while (CHIT.hasNext()) {
+                    DataSnapshot psk = CHIT.next();
+                    Participant participant = psk.getValue(Participant.class);
+                    participants.add(participant);
+                }
             }
+            meeting.setParticipants(participants);
+            if (meeting.getFromDate().equals(strDate))
+            {
+                Data.add(meeting);
+            }
+            adapter.notifyDataSetChanged();
+            Log.d(TAG,"Data read sucs");
         }
-        meeting.setParticipants(participants);
-        Data.add(meeting);
-        adapter.notifyDataSetChanged();
-        Log.d(TAG,"Data read sucs");
+        catch (NullPointerException e){
+            for (StackTraceElement stackTraceElement:e.getStackTrace()){
+                Log.d(TAG,stackTraceElement.getMethodName());
+            }
+        Log.d(TAG,e.getMessage());
+        }
+
     }
 
     @Override
