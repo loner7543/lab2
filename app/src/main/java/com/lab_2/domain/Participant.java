@@ -1,5 +1,6 @@
 package com.lab_2.domain;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ import java.util.Map;
  * Created by Александр on 18.10.2016.
  */
 
-public class Participant {
+public class Participant implements Serializable {
     private String Fio;
     private String Position;
 

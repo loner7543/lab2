@@ -1,13 +1,18 @@
 package com.lab_2;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -90,5 +95,37 @@ public class CreateMeeting extends AppCompatActivity {
 
         PartFio.setText("");
         PartPos.setText("");
+    }
+
+    public void onEnterFromDate(View view){
+        ShowDialog(1);
+    }
+
+    public void onEnterToDate(View view){
+        ShowDialog(2);
+    }
+
+    public void ShowDialog(final int action){
+        LayoutInflater layoutInflater = LayoutInflater.from(CreateMeeting.this);
+        View promptView = layoutInflater.inflate(R.layout.date_picker, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CreateMeeting.this);
+        alertDialogBuilder.setView(promptView);
+
+        final DatePicker dp = (DatePicker) promptView.findViewById(R.id.picker);
+        alertDialogBuilder.setCancelable(false)
+                .setNegativeButton("Ок",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                if (action==1){
+                                    FromDate.setText(dp.getYear()+":"+dp.getMonth()+":"+dp.getDayOfMonth());
+                                }
+                                else {
+                                    ToDate.setText(dp.getYear()+":"+dp.getMonth()+":"+dp.getDayOfMonth());
+                                }
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
 }

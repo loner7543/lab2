@@ -2,13 +2,14 @@ package com.lab_2.domain;
 
 import com.lab_2.domain.Participant;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Александр on 18.10.2016.
  */
 
-public class Meeting {
+public class Meeting implements Serializable {
     private String Key;
     private String Name;
     private String Description;
