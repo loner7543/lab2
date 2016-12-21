@@ -1,4 +1,4 @@
-package com.lab_2.manager;
+package com.lab_2.recivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,7 +10,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.lab_2.MainActivity;
 import com.lab_2.domain.Participant;
 
 /**
@@ -18,8 +17,8 @@ import com.lab_2.domain.Participant;
  */
 //Этот класс принимает интент и является глобальным системным слушателем. Ему прилетает интент оот аларм менеджера. Менеджер уже настроен на срабатывание раз в 10 мин
     //отсюда надо идти в сеть
-public class MyReciver extends BroadcastReceiver {
-    private final static String BROADCAST_KEY = "MyReciver";
+public class AlarmManagerReciver extends BroadcastReceiver {
+    private final static String BROADCAST_KEY = "AlarmManagerReciver";
     private final static String MY_ACTION="MyAction";
     private DatabaseReference databaseReference;
     private Context context;
@@ -39,7 +38,7 @@ public class MyReciver extends BroadcastReceiver {
             }
         });
         Log.d(BROADCAST_KEY, "какое то действие");
-        Intent newI = new Intent();
+        Intent newI = new Intent(Intent.ACTION_TIME_TICK);
         Participant participant = new Participant("efff","efefef");
         newI.putExtra("asd","ded");
         newI.addCategory(Intent.CATEGORY_DEFAULT);

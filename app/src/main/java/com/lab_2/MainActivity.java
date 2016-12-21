@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -28,12 +29,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lab_2.adapters.MeetingAdaper;
 import com.lab_2.domain.Meeting;
 import com.lab_2.domain.Participant;
-import com.lab_2.manager.MyReciver;
-import com.lab_2.manager.NetworkService;
+import com.lab_2.recivers.AlarmManagerReciver;
+import com.lab_2.service.MyService;
+import com.lab_2.service.NetworkService;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -100,11 +103,11 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         random = new Random();
         mDatabase.addChildEventListener(this);
 
-        alarmIntent = new Intent(this, MyReciver.class);
+        alarmIntent = new Intent(this, AlarmManagerReciver.class);
         alarmPendingIntent = PendingIntent.getBroadcast(this,0,alarmIntent,0);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-       // alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,50000,50000,alarmPendingIntent);// повторяет периодически действие направляя интент слушателю
-        broadcastReceiver = new BroadcastReceiver() {
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,50000,50000,alarmPendingIntent);// повторяет периодически действие направляя интент слушателю
+       /* broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action  = intent.getAction();
@@ -117,7 +120,17 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
 
         IntentFilter intFilt = new IntentFilter(Intent.ACTION_TIME_TICK);
         // регистрируем (включаем) BroadcastReceiver
-        registerReceiver(broadcastReceiver, intFilt);
+        registerReceiver(broadcastReceiver, intFilt);*/
+
+        //Пробуем еще раз
+        OnUpdateReciver meetingListBroadcast = new OnUpdateReciver();
+        IntentFilter intentFilterTime = new IntentFilter(
+                MyService.ACTION_MYINTENTSERVICE);
+        intentFilterTime.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(meetingListBroadcast, intentFilterTime);
+
+
+        updateTimeMeetingList();
 
         networkIntent =  new Intent(this,NetworkService.class);
         networkPendingIntent = PendingIntent.getBroadcast(this,0,networkIntent,0);
@@ -155,7 +168,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         Log.d(TAG,"requestCode  "+requestCode+"resultCode  "+resultCode);
         if (resultCode==RESULT_OK){
             adapter.notifyDataSetChanged();
-            onShowNotification();
+            onShowNotification("Добавлена встреча");
         }
     }
 
@@ -180,7 +193,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         Log.d(TAG,"loadPost:onCancelled", databaseError.toException());
     }
 
-    public void onShowNotification(){
+    public void onShowNotification(String message){
         NotificationIntent = new Intent(context,MainActivity.class);
         pendingIntent = PendingIntent.getActivity(context,
                 0, NotificationIntent,
@@ -195,7 +208,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
                 .setContentTitle(resources.getString(R.string.from_date)) // Заголовок уведомления
-                .setContentText(resources.getString(R.string.New_Meet)); // Текст уведомления
+                .setContentText(message); // Текст уведомления
          notification = builder.build();
         notification.vibrate = vibrate;
 
@@ -235,10 +248,10 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
                 }
             }
             meeting.setParticipants(participants);
-            if (meeting.getFromDate().equals(strDate))
-            {
+         //   if (meeting.getFromDate().equals(strDate))
+          //  {
                 Data.add(meeting);
-            }
+           // }
             adapter.notifyDataSetChanged();
             Log.d(TAG,"Data read sucs");
         }
@@ -289,13 +302,27 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         String s = "efefefefe";
     }
 
-    public void startService(View view){
-        startService(new Intent(this, MyService.class));
+    public void updateTimeMeetingList()
+    {
+        Intent intent = new Intent(getApplicationContext(), MyService.class);
+        startService(intent);
     }
 
-    public void stopService(View view){
-        stopService(new Intent(this, MyService.class));
+    public class OnUpdateReciver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getStringExtra("NETWORK").equals("1")) {
+                ArrayList<Meeting> data = (ArrayList<Meeting>) intent.getSerializableExtra(MyService.MEETINGS);
+                LinkedList<Meeting> linked = new LinkedList<>();
+                for (Meeting meeting:data){
+                    linked.add(meeting);
+                }
+                MeetingAdaper adapter = new MeetingAdaper(getApplicationContext(),R.layout.list_item,linked);
+                MeetingsList.setAdapter(adapter);
+                Toast.makeText(getApplicationContext(), "Данные получены", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Сеть недоступна", Toast.LENGTH_LONG).show();
+            }
+        }
     }
-
-
 }

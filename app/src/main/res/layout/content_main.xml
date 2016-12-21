@@ -56,22 +56,6 @@
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/startService"
-        android:layout_below="@+id/export_btn"
-        android:text="Запустить сервис"
-        android:onClick="startService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/stopBtn"
-        android:layout_below="@+id/startService"
-        android:onClick="stopService"
-        android:text="Stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
         android:focusable = "false"
         android:focusableInTouchMode = "false"
         android:id="@+id/cancel_meat"
