@@ -167,8 +167,18 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG,"requestCode  "+requestCode+"resultCode  "+resultCode);
         if (resultCode==RESULT_OK){
+            int pId = 1;
+            List<Participant> newPart = new LinkedList<>();
+            int count = data.getIntExtra("count",50);
+            for (int h = 0;h<count;h++){
+                newPart.add((Participant) data.getSerializableExtra("part"+pId));
+                pId++;
+            }
+            Meeting newMeet = (Meeting) data.getSerializableExtra("meeting");
+            newMeet.setParticipants(newPart);
+            Data.add(newMeet);
             adapter.notifyDataSetChanged();
-            onShowNotification("Добавлена встреча");
+            onShowNotification("Добавлена встреча c телефона");
         }
     }
 
@@ -304,8 +314,8 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
 
     public void updateTimeMeetingList()
     {
-        Intent intent = new Intent(getApplicationContext(), MyService.class);
-        startService(intent);
+       /* Intent intent = new Intent(getApplicationContext(), MyService.class);
+        startService(intent);*/
     }
 
     public class OnUpdateReciver extends BroadcastReceiver {

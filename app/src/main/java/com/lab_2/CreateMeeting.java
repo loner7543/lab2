@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.lab_2.domain.Meeting;
 import com.lab_2.domain.Participant;
 
 import java.util.ArrayList;
@@ -80,9 +81,17 @@ public class CreateMeeting extends AppCompatActivity {
         }
         i++;
         j=0;
-        newParticipants.clear();
         intent = new Intent();
+        Meeting newMeeting = new Meeting(NameText,DescText,FromDateText,ToDateText,null,Type);
+        intent.putExtra("meeting",newMeeting);
+        int pId = 1;
+        for (Participant participant:newParticipants){
+            intent.putExtra("part"+pId,participant);
+            pId++;
+        }
+        intent.putExtra("count",newParticipants.size());
         setResult(RESULT_OK, intent);
+        newParticipants.clear();
         finish();
     }
 
