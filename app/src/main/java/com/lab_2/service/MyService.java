@@ -65,9 +65,8 @@ public class MyService extends IntentService
             {
                 while (true) {
 
-                    Thread.sleep(50000);
+                    Thread.sleep(600000);
                     meetings = new LinkedList<>();
-                    //listKeys = new ArrayList<>();
                     DatabaseReference db = FirebaseDatabase.getInstance().getReference();
                     meetingListener = new MeetingListListenerTime(db);
                     db.addValueEventListener(meetingListener);
@@ -98,8 +97,6 @@ public class MyService extends IntentService
 
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-           // mapMeetings = (Map<String, Map<String, String>>) dataSnapshot.child("Meetings").getValue();
-          //  mapKeys = (Map<String, String>) dataSnapshot.child("Keys").getValue();
             try {
                 Iterable<DataSnapshot> iterable = dataSnapshot.getChildren();
                 Iterator<DataSnapshot> chIter = iterable.iterator();

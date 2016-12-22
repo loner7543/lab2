@@ -49,13 +49,19 @@ public class SearchActivity extends AppCompatActivity implements ValueEventListe
     }
 
     public void onStartSearch(View view){
-        for (Meeting meeting: data){
-            if (meeting.getDescription().equals(searchData.getText().toString())){
-                searchResult.add(meeting);
+        try{
+            for (Meeting meeting: data){
+                if (meeting.getDescription().equals(searchData.getText().toString())){
+                    searchResult.add(meeting);
+                }
             }
+            meetingAdaper = new MeetingAdaper(getApplicationContext(),R.layout.list_item,searchResult);
+            resultListView.setAdapter(meetingAdaper);
         }
-        meetingAdaper = new MeetingAdaper(getApplicationContext(),R.layout.list_item,searchResult);
-        resultListView.setAdapter(meetingAdaper);
+        catch (NullPointerException e){
+            Log.d(KEY,"у встречи отсутствует описание");
+        }
+
 
 
     }

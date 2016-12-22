@@ -183,7 +183,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
     }
 
     public void getAllMeat(View view) {
-
+        //fb
     }
 
     public void exportToCSV(View view) throws IOException {
@@ -242,10 +242,13 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
             meeting.setToDate((String) dataSnapshot.child(Fields.TO_DATE).getValue());
             meeting.setType((String) dataSnapshot.child(Fields.TYPE).getValue());
             String checked = (String) dataSnapshot.child(Fields.IS_GOING).getValue();
-        /*if (checked.equals(Fields.YES)){
-            meeting.setGoing(true);
-        }
-        else meeting.setGoing(false);*/
+            if(checked!=null)
+            {
+                if (checked.equals(Fields.YES)){
+                    meeting.setGoing(true);
+                }
+                else meeting.setGoing(false);
+            }
             if (dataSnapshot.hasChild(PArTICIPANTS_CHILD_KEY)) {
                 DataSnapshot ps = dataSnapshot.child(Fields.PARTICIPANTS);
                 CHIterable = ps.getChildren();
@@ -264,6 +267,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
            // }
             adapter.notifyDataSetChanged();
             Log.d(TAG,"Data read sucs");
+            onShowNotification("Добавлена встреча с сервера");
         }
         catch (NullPointerException e){
             for (StackTraceElement stackTraceElement:e.getStackTrace()){
@@ -300,6 +304,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         Data.remove(removed);
         adapter.notifyDataSetChanged();
         Log.d(TAG,"Data size  "+Data.size());
+        onShowNotification("Удален элемент с названием  "+removed.getName());
     }
 
     @Override
@@ -314,8 +319,8 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
 
     public void updateTimeMeetingList()
     {
-       /* Intent intent = new Intent(getApplicationContext(), MyService.class);
-        startService(intent);*/
+        Intent intent = new Intent(getApplicationContext(), MyService.class);
+        startService(intent);
     }
 
     public class OnUpdateReciver extends BroadcastReceiver {
