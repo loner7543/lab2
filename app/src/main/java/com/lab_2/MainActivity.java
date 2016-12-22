@@ -287,14 +287,14 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
 
     @Override
     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-        Log.d(TAG,"On child changed");
+        /*Log.d(TAG,"On child changed");
         Meeting selectedMeet = null;
         for (Meeting m:Data){
             if (m.getKey().equals(dataSnapshot.getKey())){
                 selectedMeet = m;
             }
         }
-        String go;
+        String go;*/
     }
 
     @Override

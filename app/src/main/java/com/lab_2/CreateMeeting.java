@@ -83,6 +83,7 @@ public class CreateMeeting extends AppCompatActivity {
         j=0;
         intent = new Intent();
         Meeting newMeeting = new Meeting(NameText,DescText,FromDateText,ToDateText,null,Type);
+        newMeeting.setKey(Fields.MEET_NAME+4);
         intent.putExtra("meeting",newMeeting);
         int pId = 1;
         for (Participant participant:newParticipants){
