@@ -23,7 +23,7 @@
             android:layout_height="200dp"
             android:headerDividersEnabled="false"></ListView>
 
-    <Button
+ <!--   <Button
         android:focusable = "false"
         android:focusableInTouchMode = "false"
         android:id="@+id/get_all_meat"
@@ -31,14 +31,13 @@
         android:text="Получить новые встречи"
         android:layout_below="@+id/meeting_list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
 
     <Button
         android:focusable = "false"
         android:focusableInTouchMode = "false"
         android:text="@string/create_meating"
         android:onClick="onCreateMeat"
-        android:layout_toRightOf="@+id/get_all_meat"
         android:layout_below="@+id/meeting_list"
         android:id="@+id/crate_meat"
         android:layout_width="wrap_content"
@@ -63,7 +62,7 @@
         android:onClick="onDeleteMeet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/get_all_meat"
+        android:layout_below="@+id/export_btn"
         android:layout_alignEnd="@+id/crate_meat"
         android:layout_marginTop="16dp" />
 </RelativeLayout>

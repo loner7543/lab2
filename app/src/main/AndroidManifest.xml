@@ -47,6 +47,11 @@
             android:enabled="true"
             android:exported="true" />
 
+        <service android:name=".service.BtnService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+
         <activity android:name=".NetworkLostActivity" />
 
         <receiver android:name=".recivers.AlarmManagerReciver" android:enabled="true"  android:permission="android.permission.RECEIVE_BOOT_COMPLETED">

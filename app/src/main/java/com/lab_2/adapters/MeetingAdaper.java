@@ -13,10 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lab_2.MainActivity;
 import com.lab_2.R;
 import com.lab_2.domain.Meeting;
 import com.lab_2.domain.Participant;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**

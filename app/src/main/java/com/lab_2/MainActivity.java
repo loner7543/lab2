@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
@@ -26,10 +28,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lab_2.adapters.MeetingAdaper;
 import com.lab_2.domain.Meeting;
 import com.lab_2.domain.Participant;
 import com.lab_2.recivers.AlarmManagerReciver;
+import com.lab_2.service.BtnService;
 import com.lab_2.service.MyService;
 import com.lab_2.service.NetworkService;
 
@@ -77,6 +81,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
     private Date currentDate;
     private String strDate;
     private DateFormat dfISO;
+    //private Meeting
 
     private BroadcastReceiver broadcastReceiver;
 
@@ -128,6 +133,13 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
                 MyService.ACTION_MYINTENTSERVICE);
         intentFilterTime.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(meetingListBroadcast, intentFilterTime);
+
+        OnClickBroadCastReciver onClickBroadCastReciver = new OnClickBroadCastReciver();
+        IntentFilter filter = new IntentFilter(
+                MyService.ACTION_MYINTENTSERVICE);
+        intentFilterTime.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(onClickBroadCastReciver, filter);
+        onUpdateBtnMeeting();
 
 
         updateTimeMeetingList();
@@ -183,7 +195,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
     }
 
     public void getAllMeat(View view) {
-        //fb
+        onUpdateBtnMeeting();
     }
 
     public void exportToCSV(View view) throws IOException {
@@ -193,7 +205,10 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
 
     public void onDeleteMeet(View view){
        Meeting meeting = adapter.getMeetingItemByName();
-        mDatabase.child(meeting.getName()).removeValue();
+        mDatabase.child(meeting.getKey()).removeValue();
+        Log.d(TAG,"Size  "+Data.size());
+        Data.remove(meeting);
+        Log.d(TAG," After Size  "+Data.size());
         adapter.notifyDataSetChanged();
     }
 
@@ -231,43 +246,51 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         try{
-            List<Participant> participants = null;
-            Iterable<DataSnapshot> CHIterable;
-            Iterator<DataSnapshot> CHIT;
-            Meeting meeting = new Meeting();
-            meeting.setKey(dataSnapshot.getKey());
-            meeting.setName((String) dataSnapshot.child(Fields.NAME).getValue());
-            meeting.setDescription((String) dataSnapshot.child(Fields.DESCRIPTION).getValue());
-            meeting.setFromDate((String) dataSnapshot.child(Fields.FROM_DATE).getValue());
-            meeting.setToDate((String) dataSnapshot.child(Fields.TO_DATE).getValue());
-            meeting.setType((String) dataSnapshot.child(Fields.TYPE).getValue());
-            String checked = (String) dataSnapshot.child(Fields.IS_GOING).getValue();
-            if(checked!=null)
-            {
-                if (checked.equals(Fields.YES)){
-                    meeting.setGoing(true);
+            ConnectivityManager connMan = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo ni = connMan.getActiveNetworkInfo();
+            if(ni!=null&&ni.isConnected()) {
+                List<Participant> participants = null;
+                Iterable<DataSnapshot> CHIterable;
+                Iterator<DataSnapshot> CHIT;
+                Meeting meeting = new Meeting();
+                meeting.setKey(dataSnapshot.getKey());
+                meeting.setName((String) dataSnapshot.child(Fields.NAME).getValue());
+                meeting.setDescription((String) dataSnapshot.child(Fields.DESCRIPTION).getValue());
+                meeting.setFromDate((String) dataSnapshot.child(Fields.FROM_DATE).getValue());
+                meeting.setToDate((String) dataSnapshot.child(Fields.TO_DATE).getValue());
+                meeting.setType((String) dataSnapshot.child(Fields.TYPE).getValue());
+                String checked = (String) dataSnapshot.child(Fields.IS_GOING).getValue();
+                if(checked!=null)
+                {
+                    if (checked.equals(Fields.YES)){
+                        meeting.setGoing(true);
+                    }
+                    else meeting.setGoing(false);
                 }
-                else meeting.setGoing(false);
-            }
-            if (dataSnapshot.hasChild(PArTICIPANTS_CHILD_KEY)) {
-                DataSnapshot ps = dataSnapshot.child(Fields.PARTICIPANTS);
-                CHIterable = ps.getChildren();
-                CHIT = CHIterable.iterator();
-                participants = new LinkedList<>();
-                while (CHIT.hasNext()) {
-                    DataSnapshot psk = CHIT.next();
-                    Participant participant = psk.getValue(Participant.class);
-                    participants.add(participant);
+                if (dataSnapshot.hasChild(PArTICIPANTS_CHILD_KEY)) {
+                    DataSnapshot ps = dataSnapshot.child(Fields.PARTICIPANTS);
+                    CHIterable = ps.getChildren();
+                    CHIT = CHIterable.iterator();
+                    participants = new LinkedList<>();
+                    while (CHIT.hasNext()) {
+                        DataSnapshot psk = CHIT.next();
+                        Participant participant = psk.getValue(Participant.class);
+                        participants.add(participant);
+                    }
                 }
-            }
-            meeting.setParticipants(participants);
-         //   if (meeting.getFromDate().equals(strDate))
-          //  {
+                meeting.setParticipants(participants);
+                //   if (meeting.getFromDate().equals(strDate))
+                //  {
                 Data.add(meeting);
-           // }
-            adapter.notifyDataSetChanged();
-            Log.d(TAG,"Data read sucs");
-            onShowNotification("Добавлена встреча с сервера");
+                // }
+                adapter.notifyDataSetChanged();
+                Log.d(TAG,"Data read sucs");
+                onShowNotification("Добавлена встреча с сервера");
+            }
+            else {
+                onShowNotification("Сеть недоступна - ChildAdded");
+            }
+
         }
         catch (NullPointerException e){
             for (StackTraceElement stackTraceElement:e.getStackTrace()){
@@ -304,7 +327,6 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         Data.remove(removed);
         adapter.notifyDataSetChanged();
         Log.d(TAG,"Data size  "+Data.size());
-        onShowNotification("Удален элемент с названием  "+removed.getName());
     }
 
     @Override
@@ -323,6 +345,30 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         startService(intent);
     }
 
+    public void onUpdateBtnMeeting(){
+        Intent intent = new Intent(getApplicationContext(), BtnService.class);
+        startService(intent);
+    }
+
+    public class OnClickBroadCastReciver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getStringExtra("NETWORK").equals("1")) {
+                ArrayList<Meeting> data = (ArrayList<Meeting>) intent.getSerializableExtra(BtnService.MEETINGS);
+                LinkedList<Meeting> linked = new LinkedList<>();
+                for (Meeting meeting:data){
+                    linked.add(meeting);
+                }
+                MeetingAdaper adapter = new MeetingAdaper(getApplicationContext(),R.layout.list_item,linked);
+                MeetingsList.setAdapter(adapter);
+                Toast.makeText(MainActivity.this, "Данные получены", Toast.LENGTH_LONG).show();
+            } else Toast.makeText(context, "Network not found!", Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+
     public class OnUpdateReciver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -334,7 +380,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
                 }
                 MeetingAdaper adapter = new MeetingAdaper(getApplicationContext(),R.layout.list_item,linked);
                 MeetingsList.setAdapter(adapter);
-                Toast.makeText(getApplicationContext(), "Данные получены", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Данные загружены", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(getApplicationContext(), "Сеть недоступна", Toast.LENGTH_LONG).show();
             }
