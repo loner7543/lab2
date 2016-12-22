@@ -263,10 +263,11 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
                     }
                 }
                 meeting.setParticipants(participants);
-                //   if (meeting.getFromDate().equals(strDate))
-                //  {
-                Data.add(meeting);
-                // }
+                if (meeting.getFromDate()!=null){
+                    if (meeting.getFromDate().equals(strDate)) {
+                        Data.add(meeting);
+                    }
+                }
                 adapter.notifyDataSetChanged();
                 Log.d(TAG,"Data read sucs");
                 onShowNotification("Добавлена встреча с сервера");

@@ -21,6 +21,7 @@ import com.lab_2.domain.Participant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class CreateMeeting extends AppCompatActivity {
     private LinearLayout ParLayout;
@@ -64,26 +65,27 @@ public class CreateMeeting extends AppCompatActivity {
 
     public void onSendData(View view){
         NameText = Name.getText().toString();
+        String key  = getKey();
         DescText = Descrption.getText().toString();
         FromDateText = FromDate.getText().toString();
         ToDateText = ToDate.getText().toString();
         Type = spinner.getSelectedItem().toString();
-        mDatabase.child(Fields.MEET_NAME+i).child(Fields.NAME).setValue(NameText);
-        mDatabase.child(Fields.MEET_NAME+i).child(Fields.DESCRIPTION).setValue(DescText);
-        mDatabase.child(Fields.MEET_NAME+i).child(Fields.FROM_DATE).setValue(FromDateText);
-        mDatabase.child(Fields.MEET_NAME+i).child(Fields.TO_DATE).setValue(ToDateText);
-        mDatabase.child(Fields.MEET_NAME+i).child(Fields.TYPE).setValue(Type);
+        mDatabase.child(key).child(Fields.NAME).setValue(NameText);
+        mDatabase.child(key).child(Fields.DESCRIPTION).setValue(DescText);
+        mDatabase.child(key).child(Fields.FROM_DATE).setValue(FromDateText);
+        mDatabase.child(key).child(Fields.TO_DATE).setValue(ToDateText);
+        mDatabase.child(key).child(Fields.TYPE).setValue(Type);
         int j = 1;
         for (Participant participant:newParticipants){
-            mDatabase.child(Fields.MEET_NAME+i).child(Fields.PARTICIPANTS).child(Fields.PARTICIPANT+j).child(Fields.FIO).setValue(participant.getFio());
-            mDatabase.child(Fields.MEET_NAME+i).child(Fields.PARTICIPANTS).child(Fields.PARTICIPANT+j).child(Fields.POSITION).setValue(participant.getPosition());
+            mDatabase.child(key).child(Fields.PARTICIPANTS).child(Fields.PARTICIPANT+j).child(Fields.FIO).setValue(participant.getFio());
+            mDatabase.child(key).child(Fields.PARTICIPANTS).child(Fields.PARTICIPANT+j).child(Fields.POSITION).setValue(participant.getPosition());
             j++;
         }
         i++;
         j=0;
         intent = new Intent();
         Meeting newMeeting = new Meeting(NameText,DescText,FromDateText,ToDateText,null,Type);
-        newMeeting.setKey(Fields.MEET_NAME+4);
+        newMeeting.setKey(key);
         intent.putExtra("meeting",newMeeting);
         int pId = 1;
         for (Participant participant:newParticipants){
@@ -127,15 +129,22 @@ public class CreateMeeting extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 if (action==1){
-                                    FromDate.setText(dp.getYear()+":"+dp.getMonth()+":"+dp.getDayOfMonth());
+                                    int month = dp.getMonth()+1;
+                                    FromDate.setText(dp.getYear()+":"+month+":"+dp.getDayOfMonth());
                                 }
                                 else {
-                                    ToDate.setText(dp.getYear()+":"+dp.getMonth()+":"+dp.getDayOfMonth());
+                                    int month = dp.getMonth()+1;
+                                    ToDate.setText(dp.getYear()+":"+month+":"+dp.getDayOfMonth());
                                 }
                                 dialog.cancel();
                             }
                         });
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
+    }
+
+    public String getKey(){
+        Random random = new Random();
+        return Fields.MEET_NAME+random.nextInt(1000);
     }
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.database.DataSnapshot;
@@ -54,12 +55,13 @@ public class SearchActivity extends AppCompatActivity implements ValueEventListe
                 if (meeting.getDescription().equals(searchData.getText().toString())){
                     searchResult.add(meeting);
                 }
+                else {continue;}
             }
             meetingAdaper = new MeetingAdaper(getApplicationContext(),R.layout.list_item,searchResult);
             resultListView.setAdapter(meetingAdaper);
         }
         catch (NullPointerException e){
-            Log.d(KEY,"у встречи отсутствует описание");
+            Toast.makeText(getApplicationContext(),"У встречи отсутствует описание",Toast.LENGTH_LONG);
         }
 
 
