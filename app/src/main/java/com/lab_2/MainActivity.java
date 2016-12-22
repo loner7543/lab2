@@ -111,23 +111,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
         alarmIntent = new Intent(this, AlarmManagerReciver.class);
         alarmPendingIntent = PendingIntent.getBroadcast(this,0,alarmIntent,0);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,50000,50000,alarmPendingIntent);// повторяет периодически действие направляя интент слушателю
-       /* broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String action  = intent.getAction();
-                if(action.equals(Intent.ACTION_TIME_TICK)){
-                    String data = intent.getExtras().getString("asd");
-                    String d = "";
-                }
-            }
-        };
 
-        IntentFilter intFilt = new IntentFilter(Intent.ACTION_TIME_TICK);
-        // регистрируем (включаем) BroadcastReceiver
-        registerReceiver(broadcastReceiver, intFilt);*/
-
-        //Пробуем еще раз
         OnUpdateReciver meetingListBroadcast = new OnUpdateReciver();
         IntentFilter intentFilterTime = new IntentFilter(
                 MyService.ACTION_MYINTENTSERVICE);
@@ -136,7 +120,7 @@ public class MainActivity extends ActionBarActivity implements  ChildEventListen
 
         OnClickBroadCastReciver onClickBroadCastReciver = new OnClickBroadCastReciver();
         IntentFilter filter = new IntentFilter(
-                MyService.ACTION_MYINTENTSERVICE);
+                BtnService.ACTION_MYINTENTSERVICE);
         intentFilterTime.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(onClickBroadCastReciver, filter);
         onUpdateBtnMeeting();
